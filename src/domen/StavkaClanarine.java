@@ -11,4 +11,7 @@ package domen;
  */
 public class StavkaClanarine {
     
+    private String naziv;
+    private int BrTerminaNedeljno;
+    private double cenaTermina;
 }

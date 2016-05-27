@@ -11,4 +11,22 @@ package domen;
  */
 public class Zaposleni extends Lice{
     
+    private boolean administrator;
+
+    
+
+    public boolean isAdministrator() {
+        return administrator;
+    }
+
+    public void setAdministrator(boolean administrator) {
+        this.administrator = administrator;
+    }
+
+    public Zaposleni(boolean administrator, long liceID, String jmbg, String ime, String prezime, String adresa, String email, String telefon) {
+        super(liceID, jmbg, ime, prezime, adresa, email, telefon);
+        this.administrator = administrator;
+    }
+    
+    
 }

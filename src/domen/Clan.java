@@ -5,10 +5,30 @@
  */
 package domen;
 
+import java.util.Date;
+
 /**
  *
  * @author mdzeletovic
  */
 public class Clan extends Lice{
+    
+    private Date poslednjaUplata;
+
+    public Date getPoslednjaUplata() {
+        return poslednjaUplata;
+    }
+
+    public void setPoslednjaUplata(Date poslednjaUplata) {
+        this.poslednjaUplata = poslednjaUplata;
+    }
+
+    public Clan(Date poslednjaUplata, long liceID, String jmbg, String ime, String prezime, String adresa, String email, String telefon) {
+        super(liceID, jmbg, ime, prezime, adresa, email, telefon);
+        this.poslednjaUplata = poslednjaUplata;
+    }
+
+    
+    
     
 }
