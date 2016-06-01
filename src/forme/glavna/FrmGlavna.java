@@ -5,6 +5,12 @@
  */
 package forme.glavna;
 
+import forme.clanarine.FrmUnosClanarine;
+import forme.clanovi.FrmPrikazClanova;
+import forme.clanovi.FrmUnosClana;
+import java.awt.BorderLayout;
+import javax.swing.JDialog;
+
 /**
  *
  * @author mdzeletovic
@@ -32,28 +38,43 @@ public class FrmGlavna extends javax.swing.JFrame {
         jMIUnosClanova = new javax.swing.JMenuItem();
         jMIPrikazClanova = new javax.swing.JMenuItem();
         jMClanarine = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jMIUnosClanarine = new javax.swing.JMenuItem();
+        jMIPrikazClanarine = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jMClanovi.setText("Clanovi");
 
         jMIUnosClanova.setText("Unos clana");
+        jMIUnosClanova.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIUnosClanovaActionPerformed(evt);
+            }
+        });
         jMClanovi.add(jMIUnosClanova);
 
         jMIPrikazClanova.setText("Prikaz clanova");
+        jMIPrikazClanova.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIPrikazClanovaActionPerformed(evt);
+            }
+        });
         jMClanovi.add(jMIPrikazClanova);
 
         jMBGlavniMeni.add(jMClanovi);
 
         jMClanarine.setText("Clanarine");
 
-        jMenuItem1.setText("Unos clanarine");
-        jMClanarine.add(jMenuItem1);
+        jMIUnosClanarine.setText("Unos clanarine");
+        jMIUnosClanarine.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIUnosClanarineActionPerformed(evt);
+            }
+        });
+        jMClanarine.add(jMIUnosClanarine);
 
-        jMenuItem2.setText("jMenuItem2");
-        jMClanarine.add(jMenuItem2);
+        jMIPrikazClanarine.setText("Prikaz clanarina");
+        jMClanarine.add(jMIPrikazClanarine);
 
         jMBGlavniMeni.add(jMClanarine);
 
@@ -72,6 +93,25 @@ public class FrmGlavna extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMIUnosClanovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIUnosClanovaActionPerformed
+        FrmUnosClana frmUnosClana = new FrmUnosClana();
+        frmUnosClana.setVisible(true);
+    }//GEN-LAST:event_jMIUnosClanovaActionPerformed
+
+    private void jMIUnosClanarineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIUnosClanarineActionPerformed
+        FrmUnosClanarine frmUnosClanarine = new FrmUnosClanarine();
+        frmUnosClanarine.setVisible(true);
+    }//GEN-LAST:event_jMIUnosClanarineActionPerformed
+
+    private void jMIPrikazClanovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIPrikazClanovaActionPerformed
+        JDialog d = new JDialog(this, "Prikaz clanova", true);
+        d.setLayout(new BorderLayout());
+        FrmPrikazClanova f = new FrmPrikazClanova();
+        d.add(f, BorderLayout.CENTER);
+        d.pack();
+        d.setVisible(true);
+    }//GEN-LAST:event_jMIPrikazClanovaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -112,9 +152,9 @@ public class FrmGlavna extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMBGlavniMeni;
     private javax.swing.JMenu jMClanarine;
     private javax.swing.JMenu jMClanovi;
+    private javax.swing.JMenuItem jMIPrikazClanarine;
     private javax.swing.JMenuItem jMIPrikazClanova;
+    private javax.swing.JMenuItem jMIUnosClanarine;
     private javax.swing.JMenuItem jMIUnosClanova;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     // End of variables declaration//GEN-END:variables
 }
