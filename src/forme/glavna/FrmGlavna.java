@@ -5,6 +5,7 @@
  */
 package forme.glavna;
 
+import forme.clanarine.FrmPrikazClanarina;
 import forme.clanarine.FrmUnosClanarine;
 import forme.clanovi.FrmPrikazClanova;
 import forme.clanovi.FrmUnosClana;
@@ -22,6 +23,7 @@ public class FrmGlavna extends javax.swing.JFrame {
      */
     public FrmGlavna() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -74,6 +76,11 @@ public class FrmGlavna extends javax.swing.JFrame {
         jMClanarine.add(jMIUnosClanarine);
 
         jMIPrikazClanarine.setText("Prikaz clanarina");
+        jMIPrikazClanarine.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIPrikazClanarineActionPerformed(evt);
+            }
+        });
         jMClanarine.add(jMIPrikazClanarine);
 
         jMBGlavniMeni.add(jMClanarine);
@@ -97,11 +104,14 @@ public class FrmGlavna extends javax.swing.JFrame {
     private void jMIUnosClanovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIUnosClanovaActionPerformed
         FrmUnosClana frmUnosClana = new FrmUnosClana();
         frmUnosClana.setVisible(true);
+        setLocationRelativeTo(null);
+        
     }//GEN-LAST:event_jMIUnosClanovaActionPerformed
 
     private void jMIUnosClanarineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIUnosClanarineActionPerformed
         FrmUnosClanarine frmUnosClanarine = new FrmUnosClanarine();
         frmUnosClanarine.setVisible(true);
+        setLocationRelativeTo(null);
     }//GEN-LAST:event_jMIUnosClanarineActionPerformed
 
     private void jMIPrikazClanovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIPrikazClanovaActionPerformed
@@ -110,8 +120,20 @@ public class FrmGlavna extends javax.swing.JFrame {
         FrmPrikazClanova f = new FrmPrikazClanova();
         d.add(f, BorderLayout.CENTER);
         d.pack();
+        d.setLocationRelativeTo(null);
         d.setVisible(true);
+        
     }//GEN-LAST:event_jMIPrikazClanovaActionPerformed
+
+    private void jMIPrikazClanarineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIPrikazClanarineActionPerformed
+        JDialog d = new JDialog(this, "Prikaz clanarina", true);
+        d.setLayout(new BorderLayout());
+        FrmPrikazClanarina f = new FrmPrikazClanarina();
+        d.add(f, BorderLayout.CENTER);
+        d.pack();
+        d.setLocationRelativeTo(null);
+        d.setVisible(true);
+    }//GEN-LAST:event_jMIPrikazClanarineActionPerformed
 
     /**
      * @param args the command line arguments

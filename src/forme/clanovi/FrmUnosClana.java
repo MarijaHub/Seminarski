@@ -53,6 +53,10 @@ public class FrmUnosClana extends javax.swing.JFrame {
         jBtnZapamti = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Unos clana");
+        setAlwaysOnTop(true);
+        setLocation(new java.awt.Point(0, 0));
+        setLocationByPlatform(true);
 
         jLabel1.setText("LiceID");
         jLabel1.setMaximumSize(new java.awt.Dimension(47, 14));

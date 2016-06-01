@@ -49,6 +49,13 @@ public class Clanarina {
     public void setCena(double Cena) {
         this.Cena = Cena;
     }
+
+    public Clanarina(long clanarinaID, Date vaziOd, Date VaziDo, double Cena) {
+        this.clanarinaID = clanarinaID;
+        this.vaziOd = vaziOd;
+        this.VaziDo = VaziDo;
+        this.Cena = Cena;
+    }
     
     
     

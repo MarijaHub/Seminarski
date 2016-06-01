@@ -5,6 +5,14 @@
  */
 package forme.clanarine;
 
+import domen.Clan;
+import domen.Clanarina;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import poslovnaLogika.Kontroler;
+
 /**
  *
  * @author mdzeletovic
@@ -38,6 +46,7 @@ public class FrmUnosClanarine extends javax.swing.JFrame {
         jTxtCena = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocationByPlatform(true);
 
         jLabel1.setText("ClanarinaID");
         jLabel1.setMaximumSize(new java.awt.Dimension(47, 14));
@@ -60,6 +69,11 @@ public class FrmUnosClanarine extends javax.swing.JFrame {
         jLabel4.setPreferredSize(new java.awt.Dimension(47, 14));
 
         jButton1.setText("Zapamti");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,6 +121,23 @@ public class FrmUnosClanarine extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+                DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+                int clanarinaID = Integer.parseInt(jTxtClanarinaID.getText().trim());
+                Date vaziOd = df.parse(jTxtVaziOd.getText().trim());
+                Date vaziDo = df.parse(jTxtVaziDo.getText().trim());
+                Double cena = Double.parseDouble(jTxtCena.getText());
+                Clanarina cl = new Clanarina(clanarinaID, vaziOd, vaziDo, cena);
+                
+                Kontroler.getInstance().dodajClanarinu(cl);
+                JOptionPane.showMessageDialog(this, "Nova clanarina je sacuvana!");
+                
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
