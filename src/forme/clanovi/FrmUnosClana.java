@@ -6,6 +6,9 @@
 package forme.clanovi;
 
 import domen.Clan;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -200,9 +203,21 @@ public class FrmUnosClana extends javax.swing.JFrame {
                 Kontroler.getInstance().dodajClana(cl);
                 JOptionPane.showMessageDialog(this, "Novi clan je sacuvan!");
                 
-            } catch (Exception ex) {
+                FileOutputStream fileOut = new FileOutputStream("C:/Users/mdzeletovic/Documents/NetBeansProjects/Seminarski/tmp/maarijaa.ser", true);
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                out.writeObject(Kontroler.getInstance().vratiClanove());
+                out.close();
+                fileOut.close();
+                System.out.printf("Serialized data is saved in /tmp/maarijaa.ser \n");
+                
+            }
+            catch (IOException i) {
+                i.printStackTrace();
+            }
+            catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage());
             }
+       
     }//GEN-LAST:event_jBtnZapamtiActionPerformed
 
     /**

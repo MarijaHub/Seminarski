@@ -6,12 +6,20 @@
 package forme.clanovi;
 
 import domen.Clan;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import poslovnaLogika.Kontroler;
+import sun.rmi.runtime.Log;
 
 /**
  *
@@ -22,7 +30,7 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
     /**
      * Creates new form FrmPrikazClanova
      */
-    public FrmPrikazClanova() {
+    public FrmPrikazClanova() throws ClassNotFoundException {
         initComponents();
         srediFormu();
     }
@@ -67,8 +75,6 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jTblClanovi.setCellSelectionEnabled(false);
-        jTblClanovi.setRowSelectionAllowed(true);
         jScrollPane1.setViewportView(jTblClanovi);
         jTblClanovi.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
@@ -141,16 +147,16 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
 
     private void jBtnTraziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTraziActionPerformed
         RowFilter rf = RowFilter.regexFilter(jTxtFilter.getText(), jCmbFilter.getSelectedIndex());
-        //jTblClanovi.getRowSorter().setSortKeys(keys); setRowFilter(rf);
         final TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(jTblClanovi.getModel());
         jTblClanovi.setRowSorter(sorter);
         sorter.setRowFilter(rf);
-        
-        
+
+
     }//GEN-LAST:event_jBtnTraziActionPerformed
 
     private void jBtnIzmeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIzmeniActionPerformed
-        // TODO add your handling code here:
+
+
     }//GEN-LAST:event_jBtnIzmeniActionPerformed
 
 
@@ -164,31 +170,61 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
     private javax.swing.JTextField jTxtFilter;
     // End of variables declaration//GEN-END:variables
 
-    private void srediFormu() {
-        
+    private void srediFormu() throws ClassNotFoundException {
+
         for (int i = 0; i < jTblClanovi.getColumnCount(); i++) {
             jCmbFilter.addItem(jTblClanovi.getColumnName(i));
         }
-        
-        List<Clan> lc = Kontroler.getInstance().vratiClanove();
-        DefaultTableModel tableModel = (DefaultTableModel) jTblClanovi.getModel();
-        for (Clan c : lc) {
-            Object[] red = new Object[9];
-            red[0] = c.getLiceID();
-            red[1] = c.getJmbg();
-            red[2] = c.getIme();
-            red[3] = c.getPrezime();
-            red[4] = c.getTelefon();
-            tableModel.addRow(red);
+
+        List<Clan> clanovi;
+        try {
+            FileInputStream fileIn = new FileInputStream("C:/Users/mdzeletovic/Documents/NetBeansProjects/Seminarski/tmp/maarijaa.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            clanovi = (List<Clan>) in.readObject();
+            //cl = (ArrayList<Clan>) in.readObject();
+            in.close();
+            fileIn.close();
+
+//            Scanner s = new Scanner(new File("C:/Users/mdzeletovic/Documents/NetBeansProjects/Seminarski/tmp/maarijaa.ser"));
+//            ArrayList<String> lista = new ArrayList<String>();
+//            while (s.hasNext()) {
+//                lista.add(s.next());
+//            }
+//            s.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+            return;
+        } catch (ClassNotFoundException c) {
+            System.out.println("Clanclass class not found");
+            c.printStackTrace();
+            return;
         }
-        
-        
+
+//        List<Clan> lc = Kontroler.getInstance().vratiClanove();
+        DefaultTableModel tableModel = (DefaultTableModel) jTblClanovi.getModel();
+
+        clanovi.forEach(c -> {Object[] red = new Object[5];
+        red[0] = c.getLiceID();
+        red[1] = c.getJmbg();
+        red[2] = c.getIme();
+        red[3] = c.getPrezime();
+        red[4] = c.getTelefon();
+        tableModel.addRow(red);
+        });
+        jTblClanovi.setModel(tableModel);
+
     }
 
-    private boolean ActiveBtnIzmeni() {
+    
+
+
+
+private boolean ActiveBtnIzmeni() {
         if (jTblClanovi.getSelectedRowCount() == 1) {
             return true;
         }
         return false;
     }
+
+    
 }

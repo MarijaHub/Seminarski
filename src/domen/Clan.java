@@ -5,13 +5,14 @@
  */
 package domen;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author mdzeletovic
  */
-public class Clan extends Lice{
+public class Clan extends Lice implements Serializable{
     
     private Date poslednjaUplata;
 
@@ -27,6 +28,8 @@ public class Clan extends Lice{
         super(liceID, jmbg, ime, prezime, adresa, email, telefon);
         this.poslednjaUplata = poslednjaUplata;
     }
+    
+    
 
     
     

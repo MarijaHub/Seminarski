@@ -5,11 +5,13 @@
  */
 package domen;
 
+import java.io.Serializable;
+
 /**
  *
  * @author mdzeletovic
  */
-public class Lice {
+public class Lice implements Serializable{
     
     private long liceID;
     private String jmbg;
@@ -26,6 +28,9 @@ public class Lice {
         this.adresa = adresa;
         this.email = email;
         this.telefon = telefon;
+    }
+
+    public Lice() {
     }
     
     
