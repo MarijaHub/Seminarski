@@ -10,6 +10,8 @@ import forme.clanarine.FrmUnosClanarine;
 import forme.clanovi.FrmPrikazClanova;
 import forme.clanovi.FrmUnosClana;
 import java.awt.BorderLayout;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 
 /**
@@ -115,13 +117,17 @@ public class FrmGlavna extends javax.swing.JFrame {
     }//GEN-LAST:event_jMIUnosClanarineActionPerformed
 
     private void jMIPrikazClanovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIPrikazClanovaActionPerformed
-        JDialog d = new JDialog(this, "Prikaz clanova", true);
-        d.setLayout(new BorderLayout());
-        FrmPrikazClanova f = new FrmPrikazClanova();
-        d.add(f, BorderLayout.CENTER);
-        d.pack();
-        d.setLocationRelativeTo(null);
-        d.setVisible(true);
+        try {
+            JDialog d = new JDialog(this, "Prikaz clanova", true);
+            d.setLayout(new BorderLayout());
+            FrmPrikazClanova f = new FrmPrikazClanova();
+            d.add(f, BorderLayout.CENTER);
+            d.pack();
+            d.setLocationRelativeTo(null);
+            d.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FrmGlavna.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_jMIPrikazClanovaActionPerformed
 
