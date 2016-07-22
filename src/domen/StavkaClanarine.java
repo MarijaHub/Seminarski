@@ -14,4 +14,20 @@ public class StavkaClanarine {
     private String naziv;
     private int BrTerminaNedeljno;
     private double cenaTermina;
+
+    public int getBrTerminaNedeljno() {
+        return BrTerminaNedeljno;
+    }
+
+    public void setBrTerminaNedeljno(int BrTerminaNedeljno) {
+        this.BrTerminaNedeljno = BrTerminaNedeljno;
+    }
+
+    public double getCenaTermina() {
+        return cenaTermina;
+    }
+
+    public void setCenaTermina(double cenaTermina) {
+        this.cenaTermina = cenaTermina;
+    }
 }

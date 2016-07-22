@@ -6,6 +6,7 @@
 package domen;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -17,6 +18,24 @@ public class Clanarina {
     private Date vaziOd;
     private Date VaziDo;
     private double Cena;
+    private List <StavkaClanarine> stavke; 
+    private Zaposleni zaposleniKreirao;
+
+    public Zaposleni getZaposleniKreirao() {
+        return zaposleniKreirao;
+    }
+
+    public void setZaposleniKreirao(Zaposleni zaposleniKreirao) {
+        this.zaposleniKreirao = zaposleniKreirao;
+    }
+
+    public List<StavkaClanarine> getStavke() {
+        return stavke;
+    }
+
+    public void setStavke(List<StavkaClanarine> stavke) {
+        this.stavke = stavke;
+    }
 
     public long getClanarinaID() {
         return clanarinaID;

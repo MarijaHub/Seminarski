@@ -16,6 +16,24 @@ public class Racun {
     private long racunID;
     private Date datumIzdavanja;
     private double cena;
+    private Zaposleni zaposleniObradio;
+    private Clan clanUplatio;
+
+    public Clan getClanUplatio() {
+        return clanUplatio;
+    }
+
+    public void setClanUplatio(Clan clanUplatio) {
+        this.clanUplatio = clanUplatio;
+    }
+
+    public Zaposleni getZaposleniObradio() {
+        return zaposleniObradio;
+    }
+
+    public void setZaposleniObradio(Zaposleni zaposleniObradio) {
+        this.zaposleniObradio = zaposleniObradio;
+    }
 
     public long getRacunID() {
         return racunID;

@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 package poslovnaLogika;
+import db.DBKomunikacija;
 import domen.Clan;
 import domen.Clanarina;
+import domen.Lice;
 import domen.Racun;
 import domen.Zaposleni;
 import java.util.List;
@@ -20,18 +22,32 @@ public class Kontroler {
     private KolekcijaClanova kClanova;
     private KolekcijaRacuna kRacuna;
     private KolekcijaZaposlenih kZaposlenih;
+    private KolekcijaLica kLica;
     private static Kontroler kontroler;
+    private db.DBKomunikacija db;
+    
 
     public Kontroler() {
         kClanarina = new KolekcijaClanarina();
         kClanova = new KolekcijaClanova();
         kRacuna = new KolekcijaRacuna();
         kZaposlenih = new KolekcijaZaposlenih();
+        kLica = new KolekcijaLica();
+        db = new DBKomunikacija();
+        
     }
     
     public void dodajClana(Clan clan) {
         kClanova.dodajClana(clan);
     }
+    
+    public void dodajLice(Lice lice) throws Exception {
+        db.UcitajDriver();
+        db.OtvoriKonekciju();
+        db.sacuvajLice();
+        db.ZatvoriKonekciju();
+    }
+    
     public List<Clan> vratiClanove() {
         return kClanova.vratiListuClanova();
     }
