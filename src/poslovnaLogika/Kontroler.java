@@ -37,14 +37,21 @@ public class Kontroler {
         
     }
     
-    public void dodajClana(Clan clan) {
-        kClanova.dodajClana(clan);
-    }
+//    public void dodajClana(Clan clan) {
+//        kClanova.dodajClana(clan);
+//    }
     
     public void dodajLice(Lice lice) throws Exception {
         db.UcitajDriver();
         db.OtvoriKonekciju();
-        db.sacuvajLice();
+        //db.sacuvajClana(lice);
+        db.ZatvoriKonekciju();
+    }
+    
+    public void dodajClana(Clan clan) throws Exception {
+        db.UcitajDriver();
+        db.OtvoriKonekciju();
+        db.sacuvajClana(clan);
         db.ZatvoriKonekciju();
     }
     

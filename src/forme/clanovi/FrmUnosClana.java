@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import javax.swing.JOptionPane;
 import poslovnaLogika.Kontroler;
 
@@ -20,7 +20,7 @@ import poslovnaLogika.Kontroler;
  *
  * @author mdzeletovic
  */
-public class FrmUnosClana extends javax.swing.JFrame {
+public class FrmUnosClana extends javax.swing.JFrame { 
 
     /**
      * Creates new form FrmUnosClana
@@ -210,7 +210,8 @@ public class FrmUnosClana extends javax.swing.JFrame {
                 String adresa = jTxtAdresa.getText().trim();
                 String email = jTxtEmail.getText().trim();
                 String tel = jTxtTelefon.getText().trim();
-                Date uplata = df.parse(jTxtPoslednjaUplata.getText().trim());
+                java.util.Date datum1 = df.parse(jTxtPoslednjaUplata.getText().trim());
+                java.sql.Date uplata = new Date(datum1.getTime()) ;
                 Clan cl = new Clan(uplata, liceID, jmbg, ime, prezime, adresa, email, tel);
                 
                 Kontroler.getInstance().dodajClana(cl);
@@ -243,13 +244,12 @@ public class FrmUnosClana extends javax.swing.JFrame {
                 String adresa = jTxtAdresa.getText().trim();
                 String email = jTxtEmail.getText().trim();
                 String tel = jTxtTelefon.getText().trim();
-                Date uplata = df.parse(jTxtPoslednjaUplata.getText().trim());
-                Lice lice = new Lice( liceID, jmbg, ime, prezime, adresa, email, tel);
+                java.util.Date datum1 = df.parse(jTxtPoslednjaUplata.getText().trim());
+                java.sql.Date uplata = new Date(datum1.getTime()) ;
+                Clan clan = new Clan(uplata, liceID, jmbg, ime, prezime, adresa, email, tel);
                 
-                Kontroler.getInstance().dodajLice(lice);
-                JOptionPane.showMessageDialog(this, "Novi lice je sacuvan!");
-                
-                
+                Kontroler.getInstance().dodajClana(clan);
+                JOptionPane.showMessageDialog(this, "Novi CLAN je sacuvan!");
                 
             }
             catch (Exception ex) {
