@@ -5,22 +5,29 @@
  */
 package forme.clanovi;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.Constants;
 import domen.Clan;
 import domen.Lice;
+import java.awt.Component;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import poslovnaLogika.Kontroler;
 
 /**
  *
  * @author mdzeletovic
  */
-public class FrmUnosClana extends javax.swing.JFrame { 
+public class FrmUnosClana extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmUnosClana
@@ -59,7 +66,6 @@ public class FrmUnosClana extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Unos clana");
-        setAlwaysOnTop(true);
         setLocation(new java.awt.Point(0, 0));
         setLocationByPlatform(true);
 
@@ -103,6 +109,8 @@ public class FrmUnosClana extends javax.swing.JFrame {
         jLabel8.setMinimumSize(new java.awt.Dimension(47, 14));
         jLabel8.setPreferredSize(new java.awt.Dimension(47, 14));
 
+        jTxtPoslednjaUplata.setEnabled(false);
+
         jBtnZapamti.setText("Zapamti");
         jBtnZapamti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,10 +118,10 @@ public class FrmUnosClana extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Trazi");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBtnTraziActionPerformed(evt);
             }
         });
 
@@ -147,10 +155,10 @@ public class FrmUnosClana extends javax.swing.JFrame {
                 .addContainerGap(219, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(54, 54, 54)
                 .addComponent(jBtnZapamti)
-                .addGap(71, 71, 71))
+                .addGap(63, 63, 63)
+                .addComponent(jButton1)
+                .addGap(49, 49, 49))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,72 +198,87 @@ public class FrmUnosClana extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTxtPoslednjaUplata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
+                .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnZapamti)
                     .addComponent(jButton1))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnZapamtiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnZapamtiActionPerformed
-       try {
-                DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-                int liceID = Integer.parseInt(jTxtLiceID.getText().trim());
-                String jmbg = jTxtJmbg.getText().trim();
-                String ime = jTxtIme.getText().trim();
-                String prezime = jTxtPrezime.getText().trim();
-                String adresa = jTxtAdresa.getText().trim();
-                String email = jTxtEmail.getText().trim();
-                String tel = jTxtTelefon.getText().trim();
-                java.util.Date datum1 = df.parse(jTxtPoslednjaUplata.getText().trim());
-                java.sql.Date uplata = new Date(datum1.getTime()) ;
-                Clan cl = new Clan(uplata, liceID, jmbg, ime, prezime, adresa, email, tel);
-                
-                Kontroler.getInstance().dodajClana(cl);
-                JOptionPane.showMessageDialog(this, "Novi clan je sacuvan!");
-                
-                FileOutputStream fileOut = new FileOutputStream("C:/Users/mdzeletovic/Documents/NetBeansProjects/Seminarski/tmp/maarijaa.ser", true);
-                ObjectOutputStream out = new ObjectOutputStream(fileOut);
-                out.writeObject(Kontroler.getInstance().vratiClanove());
-                out.close();
-                fileOut.close();
-                System.out.printf("Serialized data is saved in /tmp/maarijaa.ser \n");
-                
-            }
-            catch (IOException i) {
-                i.printStackTrace();
-            }
-            catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage());
-            }
-       
+//       try {
+//                DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+//                int liceID = Integer.parseInt(jTxtLiceID.getText().trim());
+//                String jmbg = jTxtJmbg.getText().trim();
+//                String ime = jTxtIme.getText().trim();
+//                String prezime = jTxtPrezime.getText().trim();
+//                String adresa = jTxtAdresa.getText().trim();
+//                String email = jTxtEmail.getText().trim();
+//                String tel = jTxtTelefon.getText().trim();
+//                java.util.Date datum1 = df.parse(jTxtPoslednjaUplata.getText().trim());
+//                java.sql.Date uplata = new Date(datum1.getTime()) ;
+//                Clan cl = new Clan(uplata, liceID, jmbg, ime, prezime, adresa, email, tel);
+//                
+//                Kontroler.getInstance().dodajClana(cl);
+//                JOptionPane.showMessageDialog(this, "Novi clan je sacuvan!");
+//                
+//                FileOutputStream fileOut = new FileOutputStream("C:/Users/mdzeletovic/Documents/NetBeansProjects/Seminarski/tmp/maarijaa.ser", true);
+//                ObjectOutputStream out = new ObjectOutputStream(fileOut);
+//                out.writeObject(Kontroler.getInstance().vratiClanove());
+//                out.close();
+//                fileOut.close();
+//                System.out.printf("Serialized data is saved in /tmp/maarijaa.ser \n");
+//                
+//            }
+//            catch (IOException i) {
+//                i.printStackTrace();
+//            }
+//            catch (Exception ex) {
+//                JOptionPane.showMessageDialog(this, ex.getMessage());
+//            }
+
+        try {
+            //DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+            int liceID = Integer.parseInt(jTxtLiceID.getText().trim());
+            String jmbg = jTxtJmbg.getText().trim();
+            String ime = jTxtIme.getText().trim();
+            String prezime = jTxtPrezime.getText().trim();
+            String adresa = jTxtAdresa.getText().trim();
+            String email = jTxtEmail.getText().trim();
+            String tel = jTxtTelefon.getText().trim();
+            //java.util.Date datum1 = df.parse(jTxtPoslednjaUplata.getText().trim());
+            //java.sql.Date uplata = new Date(datum1.getTime()) ;
+            Clan clan = new Clan("2012-04-04", jmbg, ime, prezime, adresa, email, tel);
+
+            Kontroler.getInstance().dodajClana(clan);
+            JOptionPane.showMessageDialog(this, "Novi CLAN je sacuvan!");
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+
     }//GEN-LAST:event_jBtnZapamtiActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-                DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-                int liceID = Integer.parseInt(jTxtLiceID.getText().trim());
-                String jmbg = jTxtJmbg.getText().trim();
-                String ime = jTxtIme.getText().trim();
-                String prezime = jTxtPrezime.getText().trim();
-                String adresa = jTxtAdresa.getText().trim();
-                String email = jTxtEmail.getText().trim();
-                String tel = jTxtTelefon.getText().trim();
-                java.util.Date datum1 = df.parse(jTxtPoslednjaUplata.getText().trim());
-                java.sql.Date uplata = new Date(datum1.getTime()) ;
-                Clan clan = new Clan(uplata, liceID, jmbg, ime, prezime, adresa, email, tel);
-                
-                Kontroler.getInstance().dodajClana(clan);
-                JOptionPane.showMessageDialog(this, "Novi CLAN je sacuvan!");
-                
-            }
-            catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage());
-            }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jBtnTraziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTraziActionPerformed
+        // TODO add your handling code here:
+        String filter;
+        String nazivAtr;
+        List<Component> listaKomponenti = Arrays.asList(getContentPane().getComponents());
+        List<Component> lsta2 = listaKomponenti.stream().filter(x -> x instanceof JTextField).collect(Collectors.toList());
+        for (Component c : lsta2) {
+           
+                if (!(((JTextField)c).getText().equals(""))) {
+                    filter = ((JTextField) c).getText();
+                    String lokal = ((JTextField) c).getName();
+                    nazivAtr = lokal.substring(4);
+                    break;
+                } 
+            
+        }
+    }//GEN-LAST:event_jBtnTraziActionPerformed
 
     /**
      * @param args the command line arguments

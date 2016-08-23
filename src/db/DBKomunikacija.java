@@ -48,10 +48,10 @@ public class DBKomunikacija {
     public void sacuvajClana(Clan clan) throws Exception {
         CallableStatement callableStatement = null;
         try {
-            String query = "{ call insertClan(?,?,?,?,?,?,?,?) }";
+            String query = "{ call insertClan(?,?,?,?,?,?) }";
             OtvoriKonekciju();
             callableStatement = connection.prepareCall(query);
-            callableStatement.setLong("pliceID", clan.getLiceID());
+            //callableStatement.setLong("pliceID", clan.getLiceID());
             callableStatement.setString("pjmbg", clan.getJmbg());
             callableStatement.setString("pime", clan.getIme());
             callableStatement.setString("pprezime", clan.getPrezime());
@@ -61,7 +61,7 @@ public class DBKomunikacija {
             //java.util.Date datum1 = clan.getPoslednjaUplata();
             //java.sql.Date uplata = new Date(datum1.getTime()) ;
             //callableStatement.setDate("PoslednjaUplata", "2011-08-08");
-            callableStatement.executeUpdate();
+            callableStatement.executeQuery();
             System.out.println("Record is inserted into LICE table!");
         } catch (SQLException e) {
             System.out.println(e.getMessage());

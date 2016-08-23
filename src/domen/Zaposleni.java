@@ -24,7 +24,7 @@ public class Zaposleni extends Lice{
     }
 
     public Zaposleni(boolean administrator, long liceID, String jmbg, String ime, String prezime, String adresa, String email, String telefon) {
-        super(liceID, jmbg, ime, prezime, adresa, email, telefon);
+        super( jmbg, ime, prezime, adresa, email, telefon);
         this.administrator = administrator;
     }
     

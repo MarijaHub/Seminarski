@@ -24,9 +24,9 @@ public class Clan extends Lice implements Serializable{
         this.poslednjaUplata = poslednjaUplata;
     }
 
-    public Clan(Date poslednjaUplata, long liceID, String jmbg, String ime, String prezime, String adresa, String email, String telefon) {
-        super(liceID, jmbg, ime, prezime, adresa, email, telefon);
-        this.poslednjaUplata = poslednjaUplata;
+    public Clan(String poslednjaUplata, String jmbg, String ime, String prezime, String adresa, String email, String telefon) {
+        super( jmbg, ime, prezime, adresa, email, telefon);
+        //this.poslednjaUplata = poslednjaUplata;
     }
     
     
