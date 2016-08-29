@@ -31,38 +31,33 @@
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel1" alignment="0" min="-2" pref="47" max="-2" attributes="0"/>
+                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel8" min="-2" pref="85" max="-2" attributes="0"/>
                   <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel1" alignment="0" min="-2" pref="47" max="-2" attributes="0"/>
-                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel8" min="-2" pref="85" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jTxtPoslednjaUplata" min="-2" pref="123" max="-2" attributes="0"/>
-                          <Component id="jTxtTelefon" min="-2" pref="123" max="-2" attributes="0"/>
-                          <Component id="jTxtEmail" min="-2" pref="123" max="-2" attributes="0"/>
-                          <Component id="jTxtIme" min="-2" pref="123" max="-2" attributes="0"/>
-                          <Component id="jTxtPrezime" min="-2" pref="123" max="-2" attributes="0"/>
-                          <Component id="jTxtLiceID" min="-2" pref="123" max="-2" attributes="0"/>
-                          <Component id="jTxtAdresa" alignment="0" min="-2" pref="123" max="-2" attributes="0"/>
-                          <Component id="jTxtJmbg" min="-2" pref="123" max="-2" attributes="0"/>
-                      </Group>
+                  <Component id="jBtnZapamti" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jTxtPoslednjaUplata" alignment="0" min="-2" pref="123" max="-2" attributes="0"/>
+                  <Component id="jTxtPrezime" min="-2" pref="123" max="-2" attributes="0"/>
+                  <Component id="jTxtTelefon" min="-2" pref="123" max="-2" attributes="0"/>
+                  <Component id="jTxtEmail" min="-2" pref="123" max="-2" attributes="0"/>
+                  <Component id="jTxtLiceID" min="-2" pref="123" max="-2" attributes="0"/>
+                  <Component id="jTxtAdresa" alignment="0" min="-2" pref="123" max="-2" attributes="0"/>
+                  <Component id="jTxtJmbg" min="-2" pref="123" max="-2" attributes="0"/>
+                  <Component id="jTxtIme" min="-2" pref="123" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="jBtnTrazi" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+                      <Component id="jBtnPrikaziSveClanove" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="219" max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="jBtnZapamti" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+              <EmptySpace min="120" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -74,32 +69,27 @@
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTxtLiceID" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTxtJmbg" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                      <Component id="jTxtPrezime" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTxtAdresa" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTxtJmbg" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTxtIme" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTxtPrezime" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jTxtAdresa" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTxtEmail" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -114,12 +104,13 @@
                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                   <Component id="jTxtPoslednjaUplata" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              <EmptySpace pref="50" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jBtnTrazi" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jBtnZapamti" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jBtnPrikaziSveClanove" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="57" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -238,22 +229,43 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTxtLiceID">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="LiceID" noResource="true"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTxtJmbg">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="JMBG" noResource="true"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTxtIme">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="Adresa" noResource="true"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTxtPrezime">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="Ime" noResource="true"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTxtAdresa">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="Prezime" noResource="true"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTxtEmail">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="Email" noResource="true"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTxtTelefon">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="Telefon" noResource="true"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTxtPoslednjaUplata">
       <Properties>
-        <Property name="enabled" type="boolean" value="false"/>
+        <Property name="name" type="java.lang.String" value="PoslednjaUplata" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jBtnZapamti">
@@ -264,12 +276,20 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnZapamtiActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="jBtnTrazi">
       <Properties>
         <Property name="text" type="java.lang.String" value="Trazi"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnTraziActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jBtnPrikaziSveClanove">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Prikazi sve clanove"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnPrikaziSveClanoveActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

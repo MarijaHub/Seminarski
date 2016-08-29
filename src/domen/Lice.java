@@ -13,14 +13,14 @@ import java.io.Serializable;
  */
 public class Lice implements Serializable{
     
-    private long liceID;
+    private Long liceID;
     private String jmbg;
     private String ime;
     private String prezime;private String adresa;
     private String email;
     private String telefon;
 
-    public Lice( String jmbg, String ime, String prezime, String adresa, String email, String telefon) {
+    public Lice(Long liceID, String jmbg, String ime, String prezime, String adresa, String email, String telefon) {
         this.liceID = liceID;
         this.jmbg = jmbg;
         this.ime = ime;

@@ -8,7 +8,7 @@ package forme.glavna;
 import forme.clanarine.FrmPrikazClanarina;
 import forme.clanarine.FrmUnosClanarine;
 import forme.clanovi.FrmPrikazClanova;
-import forme.clanovi.FrmUnosClana;
+import forme.clanovi.FrmClanovi;
 import java.awt.BorderLayout;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,6 +40,7 @@ public class FrmGlavna extends javax.swing.JFrame {
         jMBGlavniMeni = new javax.swing.JMenuBar();
         jMClanovi = new javax.swing.JMenu();
         jMIUnosClanova = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMIPrikazClanova = new javax.swing.JMenuItem();
         jMClanarine = new javax.swing.JMenu();
         jMIUnosClanarine = new javax.swing.JMenuItem();
@@ -56,6 +57,15 @@ public class FrmGlavna extends javax.swing.JFrame {
             }
         });
         jMClanovi.add(jMIUnosClanova);
+
+        jMenuItem1.setText("Izmena clana");
+        jMenuItem1.setActionCommand("IzmenaClana");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIIzmenaClanaActionPerformed(evt);
+            }
+        });
+        jMClanovi.add(jMenuItem1);
 
         jMIPrikazClanova.setText("Prikaz clanova");
         jMIPrikazClanova.addActionListener(new java.awt.event.ActionListener() {
@@ -104,8 +114,8 @@ public class FrmGlavna extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMIUnosClanovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIUnosClanovaActionPerformed
-        FrmUnosClana frmUnosClana = new FrmUnosClana();
-        frmUnosClana.setVisible(true);
+        FrmClanovi frmClanovi = new FrmClanovi(1);
+        frmClanovi.setVisible(true);
         setLocationRelativeTo(null);
         
     }//GEN-LAST:event_jMIUnosClanovaActionPerformed
@@ -117,17 +127,14 @@ public class FrmGlavna extends javax.swing.JFrame {
     }//GEN-LAST:event_jMIUnosClanarineActionPerformed
 
     private void jMIPrikazClanovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIPrikazClanovaActionPerformed
-        try {
-            JDialog d = new JDialog(this, "Prikaz clanova", true);
-            d.setLayout(new BorderLayout());
             FrmPrikazClanova f = new FrmPrikazClanova();
+            JDialog d = new JDialog(this, "Prikaz clanova", true);
+            d.setLayout(new BorderLayout());           
             d.add(f, BorderLayout.CENTER);
             d.pack();
             d.setLocationRelativeTo(null);
             d.setVisible(true);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FrmGlavna.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         
     }//GEN-LAST:event_jMIPrikazClanovaActionPerformed
 
@@ -140,6 +147,12 @@ public class FrmGlavna extends javax.swing.JFrame {
         d.setLocationRelativeTo(null);
         d.setVisible(true);
     }//GEN-LAST:event_jMIPrikazClanarineActionPerformed
+
+    private void jMIIzmenaClanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIIzmenaClanaActionPerformed
+        FrmClanovi frmClanovi = new FrmClanovi(2);
+        frmClanovi.setVisible(true);
+        setLocationRelativeTo(null);
+    }//GEN-LAST:event_jMIIzmenaClanaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,5 +197,6 @@ public class FrmGlavna extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMIPrikazClanova;
     private javax.swing.JMenuItem jMIUnosClanarine;
     private javax.swing.JMenuItem jMIUnosClanova;
+    private javax.swing.JMenuItem jMenuItem1;
     // End of variables declaration//GEN-END:variables
 }

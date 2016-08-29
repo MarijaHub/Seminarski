@@ -6,20 +6,15 @@
 package forme.clanovi;
 
 import domen.Clan;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.ArrayList;
+import forme.clanovi.model.ClanTableModel;
 import java.util.List;
-import java.util.Scanner;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import poslovnaLogika.Kontroler;
-import sun.rmi.runtime.Log;
 
 /**
  *
@@ -30,7 +25,7 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
     /**
      * Creates new form FrmPrikazClanova
      */
-    public FrmPrikazClanova() throws ClassNotFoundException {
+    public FrmPrikazClanova()  {
         initComponents();
         srediFormu();
     }
@@ -44,13 +39,19 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTblClanovi = new javax.swing.JTable();
         jCmbFilter = new javax.swing.JComboBox<>();
         jTxtFilter = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTblClanovi = new javax.swing.JTable();
         jBtnTrazi = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jBtnIzmeni = new javax.swing.JButton();
+
+        jCmbFilter.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCmbfilterStateChanded(evt);
+            }
+        });
 
         jTblClanovi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -75,14 +76,10 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTblClanovi.setMinimumSize(new java.awt.Dimension(135, 0));
+        jTblClanovi.setPreferredSize(new java.awt.Dimension(675, 0));
         jScrollPane1.setViewportView(jTblClanovi);
         jTblClanovi.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
-        jCmbFilter.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                BlaBla(evt);
-            }
-        });
 
         jBtnTrazi.setText("Trazi");
         jBtnTrazi.addActionListener(new java.awt.event.ActionListener() {
@@ -106,23 +103,22 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jCmbFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jTxtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jBtnTrazi)
-                .addGap(83, 83, 83))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(194, 194, 194)
                 .addComponent(jBtnIzmeni)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addComponent(jCmbFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTxtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBtnTrazi)))
+                .addGap(83, 83, 83))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,17 +129,17 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
                     .addComponent(jTxtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnTrazi)
                     .addComponent(jLabel1))
+                .addGap(36, 36, 36)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jBtnIzmeni)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BlaBla(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_BlaBla
+    private void jCmbfilterStateChanded(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCmbfilterStateChanded
         // TODO add your handling code here:
-    }//GEN-LAST:event_BlaBla
+    }//GEN-LAST:event_jCmbfilterStateChanded
 
     private void jBtnTraziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTraziActionPerformed
         RowFilter rf = RowFilter.regexFilter(jTxtFilter.getText(), jCmbFilter.getSelectedIndex());
@@ -170,61 +166,55 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
     private javax.swing.JTextField jTxtFilter;
     // End of variables declaration//GEN-END:variables
 
-    private void srediFormu() throws ClassNotFoundException {
+    private void srediFormu()  {
 
-        for (int i = 0; i < jTblClanovi.getColumnCount(); i++) {
-            jCmbFilter.addItem(jTblClanovi.getColumnName(i));
-        }
-
-        List<Clan> clanovi;
         try {
-            FileInputStream fileIn = new FileInputStream("C:/Users/mdzeletovic/Documents/NetBeansProjects/Seminarski/tmp/maarijaa.ser");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            clanovi = (List<Clan>) in.readObject();
-            //cl = (ArrayList<Clan>) in.readObject();
-            in.close();
-            fileIn.close();
+            for (int i = 0; i < jTblClanovi.getColumnCount(); i++) {
+                jCmbFilter.addItem(jTblClanovi.getColumnName(i));
+            }
 
-//            Scanner s = new Scanner(new File("C:/Users/mdzeletovic/Documents/NetBeansProjects/Seminarski/tmp/maarijaa.ser"));
-//            ArrayList<String> lista = new ArrayList<String>();
-//            while (s.hasNext()) {
-//                lista.add(s.next());
-//            }
-//            s.close();
-        } catch (IOException i) {
-            i.printStackTrace();
-            return;
-        } catch (ClassNotFoundException c) {
-            System.out.println("Clanclass class not found");
-            c.printStackTrace();
-            return;
+            List<Clan> lc = Kontroler.getInstance().vratiClanove();
+
+            ClanTableModel model = new ClanTableModel(lc, jTblClanovi);
+
+            DefaultTableModel tableModel = (DefaultTableModel)jTblClanovi.getModel();
+
+            jTblClanovi.setModel(model);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
-//        List<Clan> lc = Kontroler.getInstance().vratiClanove();
-        DefaultTableModel tableModel = (DefaultTableModel) jTblClanovi.getModel();
-
-        clanovi.forEach(c -> {Object[] red = new Object[5];
-        red[0] = c.getLiceID();
-        red[1] = c.getJmbg();
-        red[2] = c.getIme();
-        red[3] = c.getPrezime();
-        red[4] = c.getTelefon();
-        tableModel.addRow(red);
-        });
-        jTblClanovi.setModel(tableModel);
-
+//        List<Clan> clanovi;
+//        try {
+//            FileInputStream fileIn = new FileInputStream("C:/Users/mdzeletovic/Documents/NetBeansProjects/Seminarski/tmp/maarijaa.ser");
+//            ObjectInputStream in = new ObjectInputStream(fileIn);
+//            clanovi = (List<Clan>) in.readObject();
+//            //cl = (ArrayList<Clan>) in.readObject();
+//            in.close();
+//            fileIn.close();
+//
+////            Scanner s = new Scanner(new File("C:/Users/mdzeletovic/Documents/NetBeansProjects/Seminarski/tmp/maarijaa.ser"));
+////            ArrayList<String> lista = new ArrayList<String>();
+////            while (s.hasNext()) {
+////                lista.add(s.next());
+////            }
+////            s.close();
+//        } catch (IOException i) {
+//            i.printStackTrace();
+//            return;
+//        } catch (ClassNotFoundException c) {
+//            System.out.println("Clanclass class not found");
+//            c.printStackTrace();
+//            return;
+//        }
     }
 
-    
-
-
-
-private boolean ActiveBtnIzmeni() {
+    private boolean ActiveBtnIzmeni() {
         if (jTblClanovi.getSelectedRowCount() == 1) {
             return true;
         }
         return false;
     }
 
-    
 }

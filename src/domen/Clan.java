@@ -6,13 +6,14 @@
 package domen;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *
  * @author mdzeletovic
  */
 public class Clan extends Lice implements Serializable{
+    
     
     private Date poslednjaUplata;
 
@@ -24,11 +25,13 @@ public class Clan extends Lice implements Serializable{
         this.poslednjaUplata = poslednjaUplata;
     }
 
-    public Clan(String poslednjaUplata, String jmbg, String ime, String prezime, String adresa, String email, String telefon) {
-        super( jmbg, ime, prezime, adresa, email, telefon);
-        //this.poslednjaUplata = poslednjaUplata;
+    public Clan(Long liceID,Date poslednjaUplata, String jmbg, String ime, String prezime, String adresa, String email, String telefon) {
+        super( liceID, jmbg, ime, prezime, adresa, email, telefon);
+        this.poslednjaUplata = poslednjaUplata;
     }
     
+    public Clan() {
+    }
     
 
     

@@ -37,26 +37,21 @@ public class Kontroler {
         
     }
     
-//    public void dodajClana(Clan clan) {
-//        kClanova.dodajClana(clan);
-//    }
-    
-    public void dodajLice(Lice lice) throws Exception {
-        db.UcitajDriver();
-        db.OtvoriKonekciju();
-        //db.sacuvajClana(lice);
-        db.ZatvoriKonekciju();
-    }
-    
     public void dodajClana(Clan clan) throws Exception {
         db.UcitajDriver();
         db.OtvoriKonekciju();
+        db.sacuvajLice(clan);
         db.sacuvajClana(clan);
         db.ZatvoriKonekciju();
     }
     
-    public List<Clan> vratiClanove() {
-        return kClanova.vratiListuClanova();
+    public List<Clan> vratiClanove() throws Exception {
+        db.UcitajDriver();
+        db.OtvoriKonekciju();
+        List<Clan> lc = db.traziSveClanove();
+        //db.commitTransakcije();
+        db.ZatvoriKonekciju();
+        return lc;
     }
     public void dodajRacun(Racun racun) {
         kRacuna.dodajRacun(racun);
@@ -83,4 +78,21 @@ public class Kontroler {
         }
         return kontroler;
     }
+
+    public void izmeniClana(Clan clan) throws Exception {
+        db.UcitajDriver();
+        db.OtvoriKonekciju();
+        db.izmeniLice(clan);
+        db.sacuvajLice(clan);
+        db.ZatvoriKonekciju();
+    }
+
+    public void traziClana(String whereUslov) throws Exception{
+        db.UcitajDriver();
+        db.OtvoriKonekciju();
+        db.traziClana(whereUslov);
+        db.ZatvoriKonekciju();
+    }
+
+    
 }
