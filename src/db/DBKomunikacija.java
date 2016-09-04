@@ -26,6 +26,7 @@ public class DBKomunikacija {
 
     private Connection connection;
 
+    // <editor-fold defaultstate="collapsed" desc="Driver i konekcija">
     public void UcitajDriver() throws Exception {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -49,6 +50,7 @@ public class DBKomunikacija {
             throw new Exception("Neuspesno zatvaranje konekcije!", e);
         }
     }
+// </editor-fold>
 
     public void sacuvajLice(Lice lice) throws Exception {
 
@@ -87,6 +89,80 @@ public class DBKomunikacija {
 
     }
 
+    public void izmeniLice(Lice lice) throws SQLException {
+
+        String query = "UPDATE  Lice SET Jmbg ,Ime,Prezime,Adresa,Email,Telefon,ModifyTime";
+
+        PreparedStatement naredba = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+        naredba.setString(1, lice.getJmbg());
+        naredba.setString(2, lice.getIme());
+        naredba.setString(3, lice.getPrezime());
+        naredba.setString(4, lice.getAdresa());
+        naredba.setString(5, lice.getEmail());
+        naredba.setString(6, lice.getTelefon());
+        naredba.setDate(7, new java.sql.Date(new java.util.Date().getTime()));
+
+        naredba.executeUpdate();
+        ResultSet rs = naredba.getGeneratedKeys();
+        if (rs.next()) {
+            lice.setLiceID(rs.getLong(1));
+        }
+    }
+
+    public List<Clan> traziClana(String whereUslov) throws Exception {
+        try {
+            List<Clan> listaClanova = new ArrayList<>();
+            String sql = "SELECT * FROM Clan Where " + whereUslov;
+            Statement sqlStatement = connection.createStatement();
+            ResultSet rs = sqlStatement.executeQuery(sql);
+            while (rs.next()) {
+                Clan clan = new Clan();
+                clan.setAdresa(rs.getString("Adresa"));
+                clan.setEmail(rs.getString("Email"));
+                clan.setIme(rs.getString("Ime"));
+                clan.setJmbg(rs.getString("Jmbg"));
+                clan.setPoslednjaUplata(rs.getDate("PoslednjaUplata"));
+                clan.setPrezime(rs.getString("Prezime"));
+                clan.setTelefon(rs.getString("Telefon"));
+
+                listaClanova.add(clan);
+            }
+            rs.close();
+            sqlStatement.close();
+            return listaClanova;
+        } catch (SQLException ex) {
+            throw new Exception("Neuspesno ucitavanje clanova!", ex);
+        }
+    }
+
+    public List<Clan> traziSveClanove() throws Exception {
+        try {
+            List<Clan> listaClanova = new ArrayList<>();
+            String sql = "SELECT LiceID, jmbg, ime, prezime, adresa, email, telefon, clanID, poslednjaUplata FROM Lice inner join Clan on ClanID = LiceID";
+            Statement sqlStatement = connection.createStatement();
+            ResultSet rs = sqlStatement.executeQuery(sql);
+            while (rs.next()) {
+                Clan clan = new Clan();
+                clan.setLiceID(rs.getLong("LiceID"));
+                clan.setAdresa(rs.getString("Adresa"));
+                clan.setEmail(rs.getString("Email"));
+                clan.setIme(rs.getString("Ime"));
+                clan.setJmbg(rs.getString("Jmbg"));
+                clan.setPoslednjaUplata(rs.getDate("PoslednjaUplata"));
+                clan.setPrezime(rs.getString("Prezime"));
+                clan.setTelefon(rs.getString("Telefon"));
+
+                listaClanova.add(clan);
+            }
+            rs.close();
+            sqlStatement.close();
+            return listaClanova;
+        } catch (SQLException ex) {
+            throw new Exception("Neuspesno ucitavanje clanova!", ex);
+        }
+    }
+
 //    public void sacuvajClana(Clan clan) throws Exception {
 //        CallableStatement callableStatement = null;
 //        try {
@@ -117,77 +193,20 @@ public class DBKomunikacija {
 //
 //        }
 //    }
-    public void izmeniLice(Lice lice) throws SQLException {
 
-        String query = "UPDATE  Lice SET Jmbg ,Ime,Prezime,Adresa,Email,Telefon,ModifyTime";
-
-        PreparedStatement naredba = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-
-        naredba.setString(1, lice.getJmbg());
-        naredba.setString(2, lice.getIme());
-        naredba.setString(3, lice.getPrezime());
-        naredba.setString(4, lice.getAdresa());
-        naredba.setString(5, lice.getEmail());
-        naredba.setString(6, lice.getTelefon());
-        naredba.setDate(7, new java.sql.Date(new java.util.Date().getTime()));
-
-        naredba.executeUpdate();
-        ResultSet rs = naredba.getGeneratedKeys();
-        if (rs.next()) {
-            lice.setLiceID(rs.getLong(1));
-        }
-    }
-
-    public List<Clan> traziClana(String whereUslov) throws Exception {
+    public void commitTransakcije() throws Exception {
         try {
-            List<Clan> listaClanova = new ArrayList<>();
-            String sql = "SELECT * FROM Clan Where " + whereUslov ;
-            Statement sqlStatement = connection.createStatement();
-            ResultSet rs = sqlStatement.executeQuery(sql);
-            while (rs.next()) {
-                Clan clan = new Clan();
-                clan.setAdresa(rs.getString("Adresa"));
-                clan.setEmail(rs.getString("Email"));
-                clan.setIme(rs.getString("Ime"));
-                clan.setJmbg(rs.getString("Jmbg"));
-                clan.setPoslednjaUplata(rs.getDate("PoslednjaUplata"));
-                clan.setPrezime(rs.getString("Prezime"));
-                clan.setTelefon(rs.getString("Telefon"));
-                
-                listaClanova.add(clan);
-            }
-            rs.close();
-            sqlStatement.close();
-            return listaClanova;
+            connection.commit();
         } catch (SQLException ex) {
-            throw new Exception("Neuspesno ucitavanje clanova!", ex);
+            throw new Exception("Neuspesan commit transakcije!", ex);
         }
     }
     
-    public List<Clan> traziSveClanove() throws Exception {
+    public void rollbackTransakcije() throws Exception {
         try {
-            List<Clan> listaClanova = new ArrayList<>();
-            String sql = "SELECT LiceID, JMBG, Ime,Prezime, Telefon FROM Lice"  ;
-            Statement sqlStatement = connection.createStatement();
-            ResultSet rs = sqlStatement.executeQuery(sql);
-            while (rs.next()) {
-                Clan clan = new Clan();
-                clan.setLiceID(rs.getLong("LiceID"));
-                //clan.setAdresa(rs.getString("Adresa"));
-                //clan.setEmail(rs.getString("Email"));
-                clan.setIme(rs.getString("Ime"));
-                clan.setJmbg(rs.getString("Jmbg"));
-                //clan.setPoslednjaUplata(rs.getDate("PoslednjaUplata"));
-                clan.setPrezime(rs.getString("Prezime"));
-                clan.setTelefon(rs.getString("Telefon"));
-                
-                listaClanova.add(clan);
-            }
-            rs.close();
-            sqlStatement.close();
-            return listaClanova;
+            connection.rollback();
         } catch (SQLException ex) {
-            throw new Exception("Neuspesno ucitavanje clanova!", ex);
+            throw new Exception("Neuspesan rollback transakcije!", ex);
         }
     }
 }

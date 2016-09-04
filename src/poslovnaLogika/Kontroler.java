@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package poslovnaLogika;
+
 import db.DBKomunikacija;
 import domen.Clan;
 import domen.Clanarina;
@@ -17,7 +18,7 @@ import java.util.List;
  * @author mdzeletovic
  */
 public class Kontroler {
-    
+
     private KolekcijaClanarina kClanarina;
     private KolekcijaClanova kClanova;
     private KolekcijaRacuna kRacuna;
@@ -25,7 +26,6 @@ public class Kontroler {
     private KolekcijaLica kLica;
     private static Kontroler kontroler;
     private db.DBKomunikacija db;
-    
 
     public Kontroler() {
         kClanarina = new KolekcijaClanarina();
@@ -34,17 +34,29 @@ public class Kontroler {
         kZaposlenih = new KolekcijaZaposlenih();
         kLica = new KolekcijaLica();
         db = new DBKomunikacija();
-        
+
     }
-    
+
     public void dodajClana(Clan clan) throws Exception {
-        db.UcitajDriver();
-        db.OtvoriKonekciju();
-        db.sacuvajLice(clan);
-        db.sacuvajClana(clan);
+
+        try {
+            db.UcitajDriver();
+            db.OtvoriKonekciju();
+            db.sacuvajLice(clan);
+            db.sacuvajClana(clan);
+            db.commitTransakcije();
+        } catch (Exception e) {
+            db.rollbackTransakcije();
+        }
+        finally {
+            db.ZatvoriKonekciju();
+        }
+        
+
+        
         db.ZatvoriKonekciju();
     }
-    
+
     public List<Clan> vratiClanove() throws Exception {
         db.UcitajDriver();
         db.OtvoriKonekciju();
@@ -53,27 +65,33 @@ public class Kontroler {
         db.ZatvoriKonekciju();
         return lc;
     }
+
     public void dodajRacun(Racun racun) {
         kRacuna.dodajRacun(racun);
     }
+
     public List<Racun> vratiRacune() {
         return kRacuna.vratiListuRacuna();
     }
+
     public void dodajZaposlenog(Zaposleni zaposleni) {
         kZaposlenih.dodajZaposlenog(zaposleni);
     }
+
     public List<Zaposleni> vratiZaposlene() {
         return kZaposlenih.vratiListuZaposlenih();
     }
+
     public void dodajClanarinu(Clanarina clanarina) {
         kClanarina.dodajClanarinu(clanarina);
     }
+
     public List<Clanarina> vratiClanarine() {
         return kClanarina.vratiListuClanarina();
     }
-    
+
     public static Kontroler getInstance() {
-        if(kontroler == null) {
+        if (kontroler == null) {
             kontroler = new Kontroler();
         }
         return kontroler;
@@ -87,12 +105,11 @@ public class Kontroler {
         db.ZatvoriKonekciju();
     }
 
-    public void traziClana(String whereUslov) throws Exception{
+    public void traziClana(String whereUslov) throws Exception {
         db.UcitajDriver();
         db.OtvoriKonekciju();
         db.traziClana(whereUslov);
         db.ZatvoriKonekciju();
     }
 
-    
 }

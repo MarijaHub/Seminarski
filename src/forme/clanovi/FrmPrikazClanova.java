@@ -11,6 +11,8 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -25,7 +27,7 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
     /**
      * Creates new form FrmPrikazClanova
      */
-    public FrmPrikazClanova()  {
+    public FrmPrikazClanova() {
         initComponents();
         srediFormu();
     }
@@ -41,45 +43,17 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
 
         jCmbFilter = new javax.swing.JComboBox<>();
         jTxtFilter = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTblClanovi = new javax.swing.JTable();
         jBtnTrazi = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jBtnIzmeni = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTblClanovi = new javax.swing.JTable();
 
         jCmbFilter.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jCmbfilterStateChanded(evt);
             }
         });
-
-        jTblClanovi.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "LiceID", "JMBG", "Ime", "Prezime", "Telefon"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Long.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTblClanovi.setMinimumSize(new java.awt.Dimension(135, 0));
-        jTblClanovi.setPreferredSize(new java.awt.Dimension(675, 0));
-        jScrollPane1.setViewportView(jTblClanovi);
-        jTblClanovi.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         jBtnTrazi.setText("Trazi");
         jBtnTrazi.addActionListener(new java.awt.event.ActionListener() {
@@ -98,27 +72,43 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
             }
         });
 
+        jTblClanovi.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "LiceID", "JMBG", "Ime", "Prezime", "Telefon"
+            }
+        ));
+        jScrollPane2.setViewportView(jTblClanovi);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(194, 194, 194)
-                .addComponent(jBtnIzmeni)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jCmbFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jTxtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jBtnTrazi)))
-                .addGap(83, 83, 83))
+                        .addComponent(jBtnTrazi)
+                        .addGap(83, 83, 83))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(99, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(223, 223, 223)
+                .addComponent(jBtnIzmeni)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,11 +119,11 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
                     .addComponent(jTxtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnTrazi)
                     .addComponent(jLabel1))
-                .addGap(36, 36, 36)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jBtnIzmeni)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -161,12 +151,12 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
     private javax.swing.JButton jBtnTrazi;
     private javax.swing.JComboBox<String> jCmbFilter;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTblClanovi;
     private javax.swing.JTextField jTxtFilter;
     // End of variables declaration//GEN-END:variables
 
-    private void srediFormu()  {
+    private void srediFormu() {
 
         try {
             for (int i = 0; i < jTblClanovi.getColumnCount(); i++) {
@@ -177,10 +167,15 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
 
             ClanTableModel model = new ClanTableModel(lc, jTblClanovi);
 
-            DefaultTableModel tableModel = (DefaultTableModel)jTblClanovi.getModel();
-
+            //DefaultTableModel tableModel = (DefaultTableModel)jTblClanovi.getModel();
             jTblClanovi.setModel(model);
-        } catch (Exception ex) {
+            jTblClanovi.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent event) {
+                    //enable button - put it in an EDT to be safe though
+                }
+            });
+            } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
@@ -208,7 +203,9 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
 //            c.printStackTrace();
 //            return;
 //        }
-    }
+        }
+
+    
 
     private boolean ActiveBtnIzmeni() {
         if (jTblClanovi.getSelectedRowCount() == 1) {

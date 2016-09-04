@@ -236,7 +236,7 @@ public class FrmClanovi extends javax.swing.JFrame {
 
         try {
             //DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-            Long liceID = null;
+            //Long liceID = null;
             String jmbg = jTxtJmbg.getText().trim();
             String ime = jTxtIme.getText().trim();
             String prezime = jTxtPrezime.getText().trim();
@@ -245,7 +245,7 @@ public class FrmClanovi extends javax.swing.JFrame {
             String tel = jTxtTelefon.getText().trim();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date datum1 = sdf.parse(jTxtPoslednjaUplata.getText().trim());
-            Clan clan = new Clan(liceID,datum1,jmbg, ime, prezime, adresa, email, tel);   
+            Clan clan = new Clan(datum1,jmbg, ime, prezime, adresa, email, tel);   
             Kontroler.getInstance().dodajClana(clan);
             
             

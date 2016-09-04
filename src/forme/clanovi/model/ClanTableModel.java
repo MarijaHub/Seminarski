@@ -33,7 +33,7 @@ public class ClanTableModel extends AbstractTableModel {
         }
     }
 
-    private final DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+    //private final DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 
     @Override
     public int getRowCount() {
@@ -60,16 +60,16 @@ public class ClanTableModel extends AbstractTableModel {
                 return clan.getIme();
             case 3:
                 return clan.getPrezime();
+//            case 4:
+//                return clan.getAdresa();
+//            case 5:
+//                return clan.getEmail();
             case 4:
-                return clan.getAdresa();
-            case 5:
-                return clan.getEmail();
-            case 6:
                 return clan.getTelefon();
-            case 7:
-                return clan.getPoslednjaUplata();
+//            case 7:
+//                return clan.getPoslednjaUplata();
             default:
-                return "n/a";
+                return "ooon/a";
         }
     }
 

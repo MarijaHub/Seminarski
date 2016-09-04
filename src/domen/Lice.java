@@ -20,8 +20,8 @@ public class Lice implements Serializable{
     private String email;
     private String telefon;
 
-    public Lice(Long liceID, String jmbg, String ime, String prezime, String adresa, String email, String telefon) {
-        this.liceID = liceID;
+    public Lice( String jmbg, String ime, String prezime, String adresa, String email, String telefon) {
+        //this.liceID = liceID;
         this.jmbg = jmbg;
         this.ime = ime;
         this.prezime = prezime;
