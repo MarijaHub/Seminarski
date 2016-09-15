@@ -38,6 +38,7 @@ public class DBKomunikacija {
     public void OtvoriKonekciju() throws Exception {
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost/sportskicentar", "root", "marija");
+            connection.setAutoCommit(false);
         } catch (SQLException e) {
             throw new Exception("Neuspesno uspostavljanje konekcije!", e);
         }
