@@ -11,6 +11,7 @@ import domen.Clanarina;
 import domen.Lice;
 import domen.Racun;
 import domen.Zaposleni;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,20 +20,20 @@ import java.util.List;
  */
 public class Kontroler {
 
-    private KolekcijaClanarina kClanarina;
-    private KolekcijaClanova kClanova;
-    private KolekcijaRacuna kRacuna;
-    private KolekcijaZaposlenih kZaposlenih;
-    private KolekcijaLica kLica;
+//    private KolekcijaClanarina kClanarina;
+//    private KolekcijaClanova kClanova;
+//    private KolekcijaRacuna kRacuna;
+//    private KolekcijaZaposlenih kZaposlenih;
+//    private KolekcijaLica kLica;
     private static Kontroler kontroler;
     private db.DBKomunikacija db;
 
     public Kontroler() {
-        kClanarina = new KolekcijaClanarina();
-        kClanova = new KolekcijaClanova();
-        kRacuna = new KolekcijaRacuna();
-        kZaposlenih = new KolekcijaZaposlenih();
-        kLica = new KolekcijaLica();
+//        kClanarina = new KolekcijaClanarina();
+//        kClanova = new KolekcijaClanova();
+//        kRacuna = new KolekcijaRacuna();
+//        kZaposlenih = new KolekcijaZaposlenih();
+//        kLica = new KolekcijaLica();
         db = new DBKomunikacija();
 
     }
@@ -47,14 +48,11 @@ public class Kontroler {
             db.commitTransakcije();
         } catch (Exception e) {
             db.rollbackTransakcije();
+            throw e;
         }
         finally {
             db.ZatvoriKonekciju();
         }
-        
-
-        
-        db.ZatvoriKonekciju();
     }
 
     public List<Clan> vratiClanove() throws Exception {
@@ -67,27 +65,29 @@ public class Kontroler {
     }
 
     public void dodajRacun(Racun racun) {
-        kRacuna.dodajRacun(racun);
+        //kRacuna.dodajRacun(racun);
     }
 
     public List<Racun> vratiRacune() {
-        return kRacuna.vratiListuRacuna();
+        return new ArrayList<>();//return kRacuna.vratiListuRacuna();
     }
 
     public void dodajZaposlenog(Zaposleni zaposleni) {
-        kZaposlenih.dodajZaposlenog(zaposleni);
+        //kZaposlenih.dodajZaposlenog(zaposleni);
     }
 
     public List<Zaposleni> vratiZaposlene() {
-        return kZaposlenih.vratiListuZaposlenih();
+        return new ArrayList<>();
+//return kZaposlenih.vratiListuZaposlenih();
     }
 
     public void dodajClanarinu(Clanarina clanarina) {
-        kClanarina.dodajClanarinu(clanarina);
+        //kClanarina.dodajClanarinu(clanarina);
     }
 
     public List<Clanarina> vratiClanarine() {
-        return kClanarina.vratiListuClanarina();
+        return new ArrayList<>();
+        //return kClanarina.vratiListuClanarina();
     }
 
     public static Kontroler getInstance() {
@@ -105,11 +105,12 @@ public class Kontroler {
         db.ZatvoriKonekciju();
     }
 
-    public void traziClana(String whereUslov) throws Exception {
+    public List<Clan> traziClana(String whereUslov) throws Exception {
         db.UcitajDriver();
         db.OtvoriKonekciju();
-        db.traziClana(whereUslov);
+        List<Clan> c = db.traziClana(whereUslov);
         db.ZatvoriKonekciju();
+        return c;
     }
 
 }

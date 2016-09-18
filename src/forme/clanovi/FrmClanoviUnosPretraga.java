@@ -9,6 +9,7 @@ import domen.Clan;
 import domen.Lice;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -30,17 +31,26 @@ import poslovnaLogika.Kontroler;
  *
  * @author mdzeletovic
  */
-public class FrmClanovi extends javax.swing.JFrame {
+public class FrmClanoviUnosPretraga extends javax.swing.JFrame {
 
     /**
-     * Creates new form FrmClanovi
+     * Creates new form FrmClanoviUnosPretraga
      */
-    
     int modRadaForme = 0;  // 1 - unios, 2 - izmena, 3 - pregled
-    public FrmClanovi(int modRada) {
+
+    public FrmClanoviUnosPretraga(int modRada) {
         initComponents();
         this.modRadaForme = modRada;
-        jTxtLiceID.setEnabled(false);  
+        if (modRada == 1) {
+            jTxtLiceID.setEnabled(false);
+            jBtnTrazi.setEnabled(false);
+        }
+        if (modRada == 2) {
+            jBtnZapamti.setEnabled(false);
+            //jTxtPoslednjaUplata.setEnabled(false);
+            JOptionPane.showMessageDialog(this, "Unesite kriterijume za pretragu");
+        }
+
     }
 
     /**
@@ -121,11 +131,11 @@ public class FrmClanovi extends javax.swing.JFrame {
 
         jTxtJmbg.setName("JMBG"); // NOI18N
 
-        jTxtIme.setName("Adresa"); // NOI18N
+        jTxtIme.setName("Ime"); // NOI18N
 
-        jTxtPrezime.setName("Ime"); // NOI18N
+        jTxtPrezime.setName("Prezime"); // NOI18N
 
-        jTxtAdresa.setName("Prezime"); // NOI18N
+        jTxtAdresa.setName("Adresa"); // NOI18N
 
         jTxtEmail.setName("Email"); // NOI18N
 
@@ -240,15 +250,14 @@ public class FrmClanovi extends javax.swing.JFrame {
             String jmbg = jTxtJmbg.getText().trim();
             String ime = jTxtIme.getText().trim();
             String prezime = jTxtPrezime.getText().trim();
-            String adresa = (jTxtAdresa.getText() != null) ?  jTxtAdresa.getText().trim() :  null;
-            String email = (jTxtEmail.getText() != null) ?  jTxtEmail.getText().trim() :  null;
+            String adresa = (jTxtAdresa.getText() != null) ? jTxtAdresa.getText().trim() : null;
+            String email = (jTxtEmail.getText() != null) ? jTxtEmail.getText().trim() : null;
             String tel = jTxtTelefon.getText().trim();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date datum1 = sdf.parse(jTxtPoslednjaUplata.getText().trim());
-            Clan clan = new Clan(datum1,jmbg, ime, prezime, adresa, email, tel);   
+            Clan clan = new Clan(datum1, jmbg, ime, prezime, adresa, email, tel);
             Kontroler.getInstance().dodajClana(clan);
-            
-            
+
             JOptionPane.showMessageDialog(this, "Novi CLAN je sacuvan!");
 
         } catch (Exception ex) {
@@ -258,31 +267,55 @@ public class FrmClanovi extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnZapamtiActionPerformed
 
     private void jBtnTraziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTraziActionPerformed
-        
+
         try {
             String whereUslov = "";
             List<Component> listaKomponenti = Arrays.asList(getContentPane().getComponents());
             List<Component> lsta2 = listaKomponenti.stream().filter(x -> x instanceof JTextField).collect(Collectors.toList());
-            lsta2.stream().filter((c) -> (!(((JTextField)c).getText().equals(""))
-                    && !(((JTextField)c).getText().isEmpty()))).forEach((c) -> {
-                String vrednost = ((JTextField) c).getText();
-                String nazivAtr = ((JTextField) c).getName();
-                whereUslov.concat(" " + nazivAtr + " = " + "'" + vrednost + "' AND " );
-            });
-            Kontroler.getInstance().traziClana(whereUslov);
+            List<JTextField> listaTxtF = new ArrayList<>();
+            List<JTextField> listaKonacna = new ArrayList<>();
+            for (Component komponenta : lsta2) {
+                listaTxtF.add((JTextField)komponenta);
+            }
+            for (JTextField c : listaTxtF) {
+                if (!( c.getText().equals("")) && !(c.getText().isEmpty())) {
+                    listaKonacna.add(c);
+                }
+            }
+            
+            for (JTextField c : listaKonacna) {
+                String vrednost =  c.getText();
+                String nazivAtr = c.getName();
+                whereUslov += (" " + nazivAtr + " = " + "'" + vrednost + "' ");
+                if (listaKonacna.indexOf(c) != (listaKonacna.size()-1)) {
+                    whereUslov += "AND ";
+                }
+            }
+            
+            vratiClanoveBase(Kontroler.getInstance().traziClana(whereUslov));
+            
+//            jTxtAdresa.setText(c.getAdresa());
+//            jTxtEmail.setText(c.getEmail());
+//            jTxtIme.setText(c.getIme());
+//            jTxtJmbg.setText(c.getJmbg());
+//            //jTxtLiceID.setText(c.getLiceIDString());
+//            jTxtPoslednjaUplata.setText(c.getPoslednjaUplata().toString());
+//            jTxtPrezime.setText(c.getPrezime());
+//            jTxtTelefon.setText(c.getTelefon());
+            
         } catch (Exception ex) {
-            Logger.getLogger(FrmClanovi.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmClanoviUnosPretraga.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jBtnTraziActionPerformed
 
     private void jBtnPrikaziSveClanoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPrikaziSveClanoveActionPerformed
 
-            FrmPrikazClanova f = new FrmPrikazClanova();
-            JDialog dialog = new JDialog(this, "Prikaz clanova", true);
-            dialog.setLayout(new BorderLayout());
-            dialog.add(f, BorderLayout.CENTER);
-            dialog.pack();
-            dialog.setVisible(true);
+        try {
+            vratiClanoveBase(Kontroler.getInstance().vratiClanove());
+        } catch (Exception ex) {
+            Logger.getLogger(FrmClanoviUnosPretraga.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
 
     }//GEN-LAST:event_jBtnPrikaziSveClanoveActionPerformed
 
@@ -307,4 +340,17 @@ public class FrmClanovi extends javax.swing.JFrame {
     private javax.swing.JTextField jTxtPrezime;
     private javax.swing.JTextField jTxtTelefon;
     // End of variables declaration//GEN-END:variables
+
+    private void vratiClanoveBase(List<Clan> vratiClanove) {
+        try {
+            FrmPrikazClanova f = new FrmPrikazClanova(vratiClanove);
+            JDialog dialog = new JDialog(this, "Prikaz clanova", true);
+            dialog.setLayout(new BorderLayout());
+            dialog.add(f, BorderLayout.CENTER);
+            dialog.pack();
+            dialog.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmClanoviUnosPretraga.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

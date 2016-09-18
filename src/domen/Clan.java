@@ -32,6 +32,10 @@ public class Clan extends Lice implements Serializable{
     
     public Clan() {
     }
+String mama = "";
+    public String getLiceIDString() {
+        return mama + (super.getLiceID());
+    }
     
 
     

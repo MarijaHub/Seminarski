@@ -27,7 +27,9 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
     /**
      * Creates new form FrmPrikazClanova
      */
-    public FrmPrikazClanova() {
+    List<Clan> listaZaPrikaz;
+    public FrmPrikazClanova(List<Clan> lista) {
+        listaZaPrikaz = lista;
         initComponents();
         srediFormu();
     }
@@ -74,13 +76,13 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
 
         jTblClanovi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "LiceID", "JMBG", "Ime", "Prezime", "Telefon"
+                "LiceID", "JMBG", "Ime", "Prezime", "Adresa", "Email", "Telefon", "PoslednjaUplata"
             }
         ));
         jScrollPane2.setViewportView(jTblClanovi);
@@ -163,9 +165,8 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
                 jCmbFilter.addItem(jTblClanovi.getColumnName(i));
             }
 
-            List<Clan> lc = Kontroler.getInstance().vratiClanove();
 
-            ClanTableModel model = new ClanTableModel(lc, jTblClanovi);
+            ClanTableModel model = new ClanTableModel(listaZaPrikaz, jTblClanovi);
 
             //DefaultTableModel tableModel = (DefaultTableModel)jTblClanovi.getModel();
             jTblClanovi.setModel(model);
@@ -175,37 +176,11 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
                     //enable button - put it in an EDT to be safe though
                 }
             });
-            } catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
-
-//        List<Clan> clanovi;
-//        try {
-//            FileInputStream fileIn = new FileInputStream("C:/Users/mdzeletovic/Documents/NetBeansProjects/Seminarski/tmp/maarijaa.ser");
-//            ObjectInputStream in = new ObjectInputStream(fileIn);
-//            clanovi = (List<Clan>) in.readObject();
-//            //cl = (ArrayList<Clan>) in.readObject();
-//            in.close();
-//            fileIn.close();
-//
-////            Scanner s = new Scanner(new File("C:/Users/mdzeletovic/Documents/NetBeansProjects/Seminarski/tmp/maarijaa.ser"));
-////            ArrayList<String> lista = new ArrayList<String>();
-////            while (s.hasNext()) {
-////                lista.add(s.next());
-////            }
-////            s.close();
-//        } catch (IOException i) {
-//            i.printStackTrace();
-//            return;
-//        } catch (ClassNotFoundException c) {
-//            System.out.println("Clanclass class not found");
-//            c.printStackTrace();
-//            return;
-//        }
-        }
-
-    
+    }
 
     private boolean ActiveBtnIzmeni() {
         if (jTblClanovi.getSelectedRowCount() == 1) {

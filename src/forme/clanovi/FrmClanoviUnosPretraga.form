@@ -240,17 +240,17 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jTxtIme">
       <Properties>
-        <Property name="name" type="java.lang.String" value="Adresa" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="Ime" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTxtPrezime">
       <Properties>
-        <Property name="name" type="java.lang.String" value="Ime" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="Prezime" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTxtAdresa">
       <Properties>
-        <Property name="name" type="java.lang.String" value="Prezime" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="Adresa" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTxtEmail">

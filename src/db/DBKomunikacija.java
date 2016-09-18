@@ -114,11 +114,15 @@ public class DBKomunikacija {
     public List<Clan> traziClana(String whereUslov) throws Exception {
         try {
             List<Clan> listaClanova = new ArrayList<>();
-            String sql = "SELECT * FROM Clan Where " + whereUslov;
+
+            String sql = "Select * from clan inner join lice on clanid = liceid where liceid in (SELECT LiceID FROM Lice \n"
+                    + "Where " + whereUslov + ")";
+
             Statement sqlStatement = connection.createStatement();
             ResultSet rs = sqlStatement.executeQuery(sql);
             while (rs.next()) {
                 Clan clan = new Clan();
+                clan.setLiceID(rs.getLong("LiceID"));
                 clan.setAdresa(rs.getString("Adresa"));
                 clan.setEmail(rs.getString("Email"));
                 clan.setIme(rs.getString("Ime"));
@@ -129,6 +133,7 @@ public class DBKomunikacija {
 
                 listaClanova.add(clan);
             }
+
             rs.close();
             sqlStatement.close();
             return listaClanova;
@@ -194,7 +199,6 @@ public class DBKomunikacija {
 //
 //        }
 //    }
-
     public void commitTransakcije() throws Exception {
         try {
             connection.commit();
@@ -202,7 +206,7 @@ public class DBKomunikacija {
             throw new Exception("Neuspesan commit transakcije!", ex);
         }
     }
-    
+
     public void rollbackTransakcije() throws Exception {
         try {
             connection.rollback();

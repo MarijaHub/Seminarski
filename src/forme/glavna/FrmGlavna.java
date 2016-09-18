@@ -8,11 +8,12 @@ package forme.glavna;
 import forme.clanarine.FrmPrikazClanarina;
 import forme.clanarine.FrmUnosClanarine;
 import forme.clanovi.FrmPrikazClanova;
-import forme.clanovi.FrmClanovi;
+import forme.clanovi.FrmClanoviUnosPretraga;
 import java.awt.BorderLayout;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
+import poslovnaLogika.Kontroler;
 
 /**
  *
@@ -114,7 +115,7 @@ public class FrmGlavna extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMIUnosClanovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIUnosClanovaActionPerformed
-        FrmClanovi frmClanovi = new FrmClanovi(1);
+        FrmClanoviUnosPretraga frmClanovi = new FrmClanoviUnosPretraga(1);
         frmClanovi.setVisible(true);
         setLocationRelativeTo(null);
         
@@ -127,13 +128,17 @@ public class FrmGlavna extends javax.swing.JFrame {
     }//GEN-LAST:event_jMIUnosClanarineActionPerformed
 
     private void jMIPrikazClanovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIPrikazClanovaActionPerformed
-            FrmPrikazClanova f = new FrmPrikazClanova();
+        try {
+            FrmPrikazClanova f = new FrmPrikazClanova(Kontroler.getInstance().vratiClanove());
             JDialog d = new JDialog(this, "Prikaz clanova", true);
             d.setLayout(new BorderLayout());           
             d.add(f, BorderLayout.CENTER);
             d.pack();
             d.setLocationRelativeTo(null);
             d.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmGlavna.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
     }//GEN-LAST:event_jMIPrikazClanovaActionPerformed
@@ -149,7 +154,7 @@ public class FrmGlavna extends javax.swing.JFrame {
     }//GEN-LAST:event_jMIPrikazClanarineActionPerformed
 
     private void jMIIzmenaClanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIIzmenaClanaActionPerformed
-        FrmClanovi frmClanovi = new FrmClanovi(2);
+        FrmClanoviUnosPretraga frmClanovi = new FrmClanoviUnosPretraga(2);
         frmClanovi.setVisible(true);
         setLocationRelativeTo(null);
     }//GEN-LAST:event_jMIIzmenaClanaActionPerformed
