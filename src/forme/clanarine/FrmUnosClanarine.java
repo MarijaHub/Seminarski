@@ -24,6 +24,7 @@ public class FrmUnosClanarine extends javax.swing.JFrame {
      */
     public FrmUnosClanarine() {
         initComponents();
+        jTxtClanarinaID.setEnabled(false);
     }
 
     /**
@@ -124,12 +125,11 @@ public class FrmUnosClanarine extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-                DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-                int clanarinaID = Integer.parseInt(jTxtClanarinaID.getText().trim());
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 Date vaziOd = df.parse(jTxtVaziOd.getText().trim());
                 Date vaziDo = df.parse(jTxtVaziDo.getText().trim());
                 Double cena = Double.parseDouble(jTxtCena.getText());
-                Clanarina cl = new Clanarina(clanarinaID, vaziOd, vaziDo, cena);
+                Clanarina cl = new Clanarina( vaziOd, vaziDo, cena);
                 
                 Kontroler.getInstance().dodajClanarinu(cl);
                 JOptionPane.showMessageDialog(this, "Nova clanarina je sacuvana!");

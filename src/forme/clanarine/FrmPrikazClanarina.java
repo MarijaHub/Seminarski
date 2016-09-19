@@ -7,7 +7,9 @@ package forme.clanarine;
 
 import domen.Clan;
 import domen.Clanarina;
+import forme.clanovi.model.ClanTableModel;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -23,7 +25,10 @@ public class FrmPrikazClanarina extends javax.swing.JPanel {
     /**
      * Creates new form FrmPrikazClanarina
      */
-    public FrmPrikazClanarina() {
+    List<Clanarina> listaZaPrikaz;
+    
+    public FrmPrikazClanarina(List<Clanarina> lista) {
+        listaZaPrikaz = lista;
         initComponents();
         srediFormu();
     }
@@ -61,7 +66,10 @@ public class FrmPrikazClanarina extends javax.swing.JPanel {
 
         jTblClanarine.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
                 "ClanarinaID", "VaziOd", "VaziDo", "Cena"
@@ -82,7 +90,8 @@ public class FrmPrikazClanarina extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jTblClanarine.setColumnSelectionAllowed(true);
+        jTblClanarine.setCellSelectionEnabled(false);
+        jTblClanarine.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jTblClanarine);
         jTblClanarine.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
@@ -126,10 +135,10 @@ public class FrmPrikazClanarina extends javax.swing.JPanel {
 
     private void jBtnTraziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTraziActionPerformed
         RowFilter rf = RowFilter.regexFilter(jTxtFilter.getText(), jCmbFilter.getSelectedIndex());
-        //jTblClanovi.getRowSorter().setSortKeys(keys); setRowFilter(rf);
         final TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(jTblClanarine.getModel());
         jTblClanarine.setRowSorter(sorter);
         sorter.setRowFilter(rf);
+        jTblClanarine.clearSelection();
 
     }//GEN-LAST:event_jBtnTraziActionPerformed
 
@@ -146,19 +155,18 @@ public class FrmPrikazClanarina extends javax.swing.JPanel {
 
     private void srediFormu() {
         
-        for (int i = 0; i < jTblClanarine.getColumnCount(); i++) {
-            jCmbFilter.addItem(jTblClanarine.getColumnName(i));
-        }
-        
-        List<Clanarina> lc = Kontroler.getInstance().vratiClanarine();
-        DefaultTableModel tableModel = (DefaultTableModel) jTblClanarine.getModel();
-        for (Clanarina c : lc) {
-            Object[] red = new Object[9];
-            red[0] = c.getClanarinaID();
-            red[1] = c.getVaziOd();
-            red[2] = c.getVaziDo();
-            red[3] = c.getCena();
-            tableModel.addRow(red);
+         try {
+            for (int i = 0; i < jTblClanarine.getColumnCount(); i++) {
+                jCmbFilter.addItem(jTblClanarine.getColumnName(i));
+            }
+
+            ClanarinaTableModel model = new ClanarinaTableModel(listaZaPrikaz, jTblClanarine);
+
+            jTblClanarine.setModel(model);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
         
         

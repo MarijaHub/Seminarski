@@ -28,10 +28,21 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
      * Creates new form FrmPrikazClanova
      */
     List<Clan> listaZaPrikaz;
+    Clan clanSel;
+
     public FrmPrikazClanova(List<Clan> lista) {
         listaZaPrikaz = lista;
         initComponents();
         srediFormu();
+        jTblClanovi.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                if (jTblClanovi.getSelectedRowCount() == 1) {
+                    jBtnIzmeni.setEnabled(true);
+                    event.getSource();
+                }
+            }
+        });
     }
 
     /**
@@ -51,12 +62,6 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTblClanovi = new javax.swing.JTable();
 
-        jCmbFilter.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jCmbfilterStateChanded(evt);
-            }
-        });
-
         jBtnTrazi.setText("Trazi");
         jBtnTrazi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -67,7 +72,7 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
         jLabel1.setText("Filter po:");
 
         jBtnIzmeni.setText("Izmeni clana");
-        jBtnIzmeni.setEnabled(ActiveBtnIzmeni());
+        jBtnIzmeni.setEnabled(false);
         jBtnIzmeni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnIzmeniActionPerformed(evt);
@@ -85,6 +90,7 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
                 "LiceID", "JMBG", "Ime", "Prezime", "Adresa", "Email", "Telefon", "PoslednjaUplata"
             }
         ));
+        jTblClanovi.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jTblClanovi);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -129,22 +135,21 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCmbfilterStateChanded(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCmbfilterStateChanded
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCmbfilterStateChanded
-
     private void jBtnTraziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTraziActionPerformed
         RowFilter rf = RowFilter.regexFilter(jTxtFilter.getText(), jCmbFilter.getSelectedIndex());
         final TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(jTblClanovi.getModel());
         jTblClanovi.setRowSorter(sorter);
         sorter.setRowFilter(rf);
-
-
     }//GEN-LAST:event_jBtnTraziActionPerformed
 
     private void jBtnIzmeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIzmeniActionPerformed
-
-
+        int pom = jTblClanovi.getSelectedRow();
+        long LiceID = (long) jTblClanovi.getModel().getValueAt(pom, 0);
+        Clan selektovaniClan = ((ClanTableModel) jTblClanovi.getModel()).getClanPoId(LiceID);
+        
+        FrmClanoviUnosPretraga frm = new FrmClanoviUnosPretraga(3, selektovaniClan);
+        frm.setVisible(true);
+        
     }//GEN-LAST:event_jBtnIzmeniActionPerformed
 
 
@@ -165,28 +170,15 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
                 jCmbFilter.addItem(jTblClanovi.getColumnName(i));
             }
 
-
             ClanTableModel model = new ClanTableModel(listaZaPrikaz, jTblClanovi);
 
-            //DefaultTableModel tableModel = (DefaultTableModel)jTblClanovi.getModel();
             jTblClanovi.setModel(model);
-            jTblClanovi.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent event) {
-                    //enable button - put it in an EDT to be safe though
-                }
-            });
+
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
 
-    private boolean ActiveBtnIzmeni() {
-        if (jTblClanovi.getSelectedRowCount() == 1) {
-            return true;
-        }
-        return false;
-    }
 
 }

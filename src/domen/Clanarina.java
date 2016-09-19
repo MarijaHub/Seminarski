@@ -21,6 +21,9 @@ public class Clanarina {
     private List <StavkaClanarine> stavke; 
     private Zaposleni zaposleniKreirao;
 
+    public Clanarina() {
+    }
+
     public Zaposleni getZaposleniKreirao() {
         return zaposleniKreirao;
     }
@@ -69,8 +72,7 @@ public class Clanarina {
         this.Cena = Cena;
     }
 
-    public Clanarina(long clanarinaID, Date vaziOd, Date VaziDo, double Cena) {
-        this.clanarinaID = clanarinaID;
+    public Clanarina( Date vaziOd, Date VaziDo, double Cena) {
         this.vaziOd = vaziOd;
         this.VaziDo = VaziDo;
         this.Cena = Cena;

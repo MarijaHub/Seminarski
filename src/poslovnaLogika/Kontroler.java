@@ -81,13 +81,27 @@ public class Kontroler {
 //return kZaposlenih.vratiListuZaposlenih();
     }
 
-    public void dodajClanarinu(Clanarina clanarina) {
-        //kClanarina.dodajClanarinu(clanarina);
+    public void dodajClanarinu(Clanarina clanarina) throws Exception {
+        try {
+            db.UcitajDriver();
+            db.OtvoriKonekciju();
+            db.sacuvajClanarinu(clanarina);
+            db.commitTransakcije();
+        } catch (Exception e) {
+            db.rollbackTransakcije();
+            throw e;
+        }
+        finally {
+            db.ZatvoriKonekciju();
+        }
     }
 
-    public List<Clanarina> vratiClanarine() {
-        return new ArrayList<>();
-        //return kClanarina.vratiListuClanarina();
+    public List<Clanarina> vratiClanarine() throws Exception {
+        db.UcitajDriver();
+        db.OtvoriKonekciju();
+        List<Clanarina> lc = db.traziSveClanarine();
+        db.ZatvoriKonekciju();
+        return lc;
     }
 
     public static Kontroler getInstance() {

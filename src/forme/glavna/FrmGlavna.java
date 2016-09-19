@@ -115,7 +115,7 @@ public class FrmGlavna extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMIUnosClanovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIUnosClanovaActionPerformed
-        FrmClanoviUnosPretraga frmClanovi = new FrmClanoviUnosPretraga(1);
+        FrmClanoviUnosPretraga frmClanovi = new FrmClanoviUnosPretraga(1, null);
         frmClanovi.setVisible(true);
         setLocationRelativeTo(null);
         
@@ -144,17 +144,21 @@ public class FrmGlavna extends javax.swing.JFrame {
     }//GEN-LAST:event_jMIPrikazClanovaActionPerformed
 
     private void jMIPrikazClanarineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIPrikazClanarineActionPerformed
-        JDialog d = new JDialog(this, "Prikaz clanarina", true);
-        d.setLayout(new BorderLayout());
-        FrmPrikazClanarina f = new FrmPrikazClanarina();
-        d.add(f, BorderLayout.CENTER);
-        d.pack();
-        d.setLocationRelativeTo(null);
-        d.setVisible(true);
+        try {
+            JDialog d = new JDialog(this, "Prikaz clanarina", true);
+            d.setLayout(new BorderLayout());
+            FrmPrikazClanarina f = new FrmPrikazClanarina(Kontroler.getInstance().vratiClanarine());
+            d.add(f, BorderLayout.CENTER);
+            d.pack();
+            d.setLocationRelativeTo(null);
+            d.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmGlavna.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMIPrikazClanarineActionPerformed
 
     private void jMIIzmenaClanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIIzmenaClanaActionPerformed
-        FrmClanoviUnosPretraga frmClanovi = new FrmClanoviUnosPretraga(2);
+        FrmClanoviUnosPretraga frmClanovi = new FrmClanoviUnosPretraga(2, null);
         frmClanovi.setVisible(true);
         setLocationRelativeTo(null);
     }//GEN-LAST:event_jMIIzmenaClanaActionPerformed

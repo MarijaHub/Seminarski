@@ -38,7 +38,7 @@ public class FrmClanoviUnosPretraga extends javax.swing.JFrame {
      */
     int modRadaForme = 0;  // 1 - unios, 2 - izmena, 3 - pregled
 
-    public FrmClanoviUnosPretraga(int modRada) {
+    public FrmClanoviUnosPretraga(int modRada, Clan clan) {
         initComponents();
         this.modRadaForme = modRada;
         if (modRada == 1) {
@@ -47,8 +47,12 @@ public class FrmClanoviUnosPretraga extends javax.swing.JFrame {
         }
         if (modRada == 2) {
             jBtnZapamti.setEnabled(false);
-            //jTxtPoslednjaUplata.setEnabled(false);
             JOptionPane.showMessageDialog(this, "Unesite kriterijume za pretragu");
+        }
+        if (modRada == 3) {
+            jBtnTrazi.setEnabled(false);
+            jBtnPrikaziSveClanove.setEnabled(false);
+            popuniClana(clan);
         }
 
     }
@@ -275,34 +279,25 @@ public class FrmClanoviUnosPretraga extends javax.swing.JFrame {
             List<JTextField> listaTxtF = new ArrayList<>();
             List<JTextField> listaKonacna = new ArrayList<>();
             for (Component komponenta : lsta2) {
-                listaTxtF.add((JTextField)komponenta);
+                listaTxtF.add((JTextField) komponenta);
             }
             for (JTextField c : listaTxtF) {
-                if (!( c.getText().equals("")) && !(c.getText().isEmpty())) {
+                if (!(c.getText().equals("")) && !(c.getText().isEmpty())) {
                     listaKonacna.add(c);
                 }
             }
-            
+
             for (JTextField c : listaKonacna) {
-                String vrednost =  c.getText();
+                String vrednost = c.getText();
                 String nazivAtr = c.getName();
                 whereUslov += (" " + nazivAtr + " = " + "'" + vrednost + "' ");
-                if (listaKonacna.indexOf(c) != (listaKonacna.size()-1)) {
+                if (listaKonacna.indexOf(c) != (listaKonacna.size() - 1)) {
                     whereUslov += "AND ";
                 }
             }
-            
+
             vratiClanoveBase(Kontroler.getInstance().traziClana(whereUslov));
-            
-//            jTxtAdresa.setText(c.getAdresa());
-//            jTxtEmail.setText(c.getEmail());
-//            jTxtIme.setText(c.getIme());
-//            jTxtJmbg.setText(c.getJmbg());
-//            //jTxtLiceID.setText(c.getLiceIDString());
-//            jTxtPoslednjaUplata.setText(c.getPoslednjaUplata().toString());
-//            jTxtPrezime.setText(c.getPrezime());
-//            jTxtTelefon.setText(c.getTelefon());
-            
+
         } catch (Exception ex) {
             Logger.getLogger(FrmClanoviUnosPretraga.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -315,7 +310,7 @@ public class FrmClanoviUnosPretraga extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(FrmClanoviUnosPretraga.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
 
     }//GEN-LAST:event_jBtnPrikaziSveClanoveActionPerformed
 
@@ -352,5 +347,16 @@ public class FrmClanoviUnosPretraga extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(FrmClanoviUnosPretraga.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void popuniClana(Clan c) {
+        jTxtAdresa.setText(c.getAdresa());
+        jTxtEmail.setText(c.getEmail());
+        jTxtIme.setText(c.getIme());
+        jTxtJmbg.setText(c.getJmbg());
+        jTxtLiceID.setText(c.getLiceIDString());
+        jTxtPoslednjaUplata.setText(c.getPoslednjaUplata().toString());
+        jTxtPrezime.setText(c.getPrezime());
+        jTxtTelefon.setText(c.getTelefon());
     }
 }

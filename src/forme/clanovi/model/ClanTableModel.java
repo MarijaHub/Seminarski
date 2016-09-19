@@ -125,4 +125,16 @@ public class ClanTableModel extends AbstractTableModel {
         return lc;
     }
 
+
+
+    public Clan getClanPoId(long LiceID) {
+        for (Clan clan : lc) {
+            if (clan.getLiceID() == LiceID) {
+                return clan;
+            }
+            
+        }
+        return null;
+    }
+
 }

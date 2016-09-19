@@ -6,6 +6,7 @@
 package db;
 
 import domen.Clan;
+import domen.Clanarina;
 import domen.Lice;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -169,36 +170,6 @@ public class DBKomunikacija {
         }
     }
 
-//    public void sacuvajClana(Clan clan) throws Exception {
-//        CallableStatement callableStatement = null;
-//        try {
-//            String query = "{ call insertClan(?,?,?,?,?,?) }";
-//            OtvoriKonekciju();
-//            callableStatement = connection.prepareCall(query);
-//            //callableStatement.setLong("pliceID", clan.getLiceID());
-//            callableStatement.setString("pjmbg", clan.getJmbg());
-//            callableStatement.setString("pime", clan.getIme());
-//            callableStatement.setString("pprezime", clan.getPrezime());
-//            callableStatement.setString("padresa", clan.getAdresa());
-//            callableStatement.setString("pemail", clan.getEmail());
-//            callableStatement.setString("ptelefon", clan.getTelefon());
-//            //java.util.Date datum1 = clan.getPoslednjaUplata();
-//            //java.sql.Date uplata = new Date(datum1.getTime()) ;
-//            //callableStatement.setDate("PoslednjaUplata", "2011-08-08");
-//            callableStatement.executeQuery();
-//            System.out.println("Record is inserted into LICE table!");
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        } finally {
-//
-//            if (callableStatement != null) {
-//                callableStatement.close();
-//            }
-//
-//            ZatvoriKonekciju();
-//
-//        }
-//    }
     public void commitTransakcije() throws Exception {
         try {
             connection.commit();
@@ -212,6 +183,46 @@ public class DBKomunikacija {
             connection.rollback();
         } catch (SQLException ex) {
             throw new Exception("Neuspesan rollback transakcije!", ex);
+        }
+    }
+
+    public void sacuvajClanarinu(Clanarina clanarina) throws SQLException {
+        String query = "Insert into Clanarina(`VaziOD` ,`VaziDo`,`Cena`) "
+                + "VALUES (?,?,?)";
+
+        PreparedStatement naredba = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+        naredba.setDouble(3, clanarina.getCena());
+        naredba.setDate(1, new java.sql.Date(clanarina.getVaziOd().getTime())); 
+        naredba.setDate(2, new java.sql.Date(clanarina.getVaziDo().getTime())); 
+
+        naredba.executeUpdate();
+        ResultSet rs = naredba.getGeneratedKeys();
+        if (rs.next()) {
+            clanarina.setClanarinaID(rs.getLong(1));
+        }
+    }
+
+    public List<Clanarina> traziSveClanarine() throws Exception {
+        try {
+            List<Clanarina> lista = new ArrayList<>();
+            String sql = "SELECT ClanarinaID, VaziOd, VaziDo, Cena FROM Clanarina ";
+            Statement sqlStatement = connection.createStatement();
+            ResultSet rs = sqlStatement.executeQuery(sql);
+            while (rs.next()) {
+                Clanarina c = new Clanarina();
+                c.setClanarinaID(rs.getLong("ClanarinaID"));
+                c.setVaziOd(rs.getDate("VaziOD"));
+                c.setVaziDo(rs.getDate("VaziDo"));
+                c.setCena(rs.getDouble("Cena"));
+
+                lista.add(c);
+            }
+            rs.close();
+            sqlStatement.close();
+            return lista;
+        } catch (SQLException ex) {
+            throw new Exception("Neuspesno ucitavanje clanarina!", ex);
         }
     }
 }
