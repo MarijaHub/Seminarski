@@ -9,6 +9,9 @@ import forme.clanarine.FrmPrikazClanarina;
 import forme.clanarine.FrmUnosClanarine;
 import forme.clanovi.FrmPrikazClanova;
 import forme.clanovi.FrmClanoviUnosPretraga;
+import forme.clanovi.JDPrikazClanova;
+import forme.racuni.PrikazRacuna;
+import forme.racuni.UnosRacunaa;
 import java.awt.BorderLayout;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,6 +49,9 @@ public class FrmGlavna extends javax.swing.JFrame {
         jMClanarine = new javax.swing.JMenu();
         jMIUnosClanarine = new javax.swing.JMenuItem();
         jMIPrikazClanarine = new javax.swing.JMenuItem();
+        jMRacuni = new javax.swing.JMenu();
+        jMIUnosRacuna = new javax.swing.JMenuItem();
+        jMIPrikazRacuna = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,6 +104,26 @@ public class FrmGlavna extends javax.swing.JFrame {
 
         jMBGlavniMeni.add(jMClanarine);
 
+        jMRacuni.setText("Racuni");
+
+        jMIUnosRacuna.setText("Unos racuna");
+        jMIUnosRacuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIUnosRacunaActionPerformed(evt);
+            }
+        });
+        jMRacuni.add(jMIUnosRacuna);
+
+        jMIPrikazRacuna.setText("Prikaz racuna");
+        jMIPrikazRacuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIPrikazRacunaActionPerformed(evt);
+            }
+        });
+        jMRacuni.add(jMIPrikazRacuna);
+
+        jMBGlavniMeni.add(jMRacuni);
+
         setJMenuBar(jMBGlavniMeni);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -118,29 +144,30 @@ public class FrmGlavna extends javax.swing.JFrame {
         FrmClanoviUnosPretraga frmClanovi = new FrmClanoviUnosPretraga(1, null);
         frmClanovi.setVisible(true);
         setLocationRelativeTo(null);
-        
+
     }//GEN-LAST:event_jMIUnosClanovaActionPerformed
 
     private void jMIUnosClanarineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIUnosClanarineActionPerformed
-        FrmUnosClanarine frmUnosClanarine = new FrmUnosClanarine();
-        frmUnosClanarine.setVisible(true);
-        setLocationRelativeTo(null);
+        try {
+            FrmUnosClanarine frmUnosClanarine = new FrmUnosClanarine();
+            frmUnosClanarine.setVisible(true);
+            setLocationRelativeTo(null);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmGlavna.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMIUnosClanarineActionPerformed
 
     private void jMIPrikazClanovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIPrikazClanovaActionPerformed
         try {
-            FrmPrikazClanova f = new FrmPrikazClanova(Kontroler.getInstance().vratiClanove());
-            JDialog d = new JDialog(this, "Prikaz clanova", true);
-            d.setLayout(new BorderLayout());           
-            d.add(f, BorderLayout.CENTER);
-            d.pack();
-            d.setLocationRelativeTo(null);
-            d.setVisible(true);
+            //FrmPrikazClanova f = new FrmPrikazClanova(Kontroler.getInstance().vratiClanove());
+            //f.setVisible(true);
+            JDPrikazClanova dialogPrikaz = new JDPrikazClanova(this, rootPaneCheckingEnabled, Kontroler.getInstance().vratiClanove());
+            dialogPrikaz.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(FrmGlavna.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
+
     }//GEN-LAST:event_jMIPrikazClanovaActionPerformed
 
     private void jMIPrikazClanarineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIPrikazClanarineActionPerformed
@@ -162,6 +189,26 @@ public class FrmGlavna extends javax.swing.JFrame {
         frmClanovi.setVisible(true);
         setLocationRelativeTo(null);
     }//GEN-LAST:event_jMIIzmenaClanaActionPerformed
+
+    private void jMIUnosRacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIUnosRacunaActionPerformed
+        try {
+            UnosRacunaa frmUnosRacuna = new UnosRacunaa();
+            frmUnosRacuna.setVisible(true);
+            setLocationRelativeTo(null);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmGlavna.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMIUnosRacunaActionPerformed
+
+    private void jMIPrikazRacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIPrikazRacunaActionPerformed
+        try {
+            PrikazRacuna dialog = new PrikazRacuna(null, false, Kontroler.getInstance().vratiRacune());
+            dialog.setVisible(true);
+            this.setVisible(false);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmGlavna.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMIPrikazRacunaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -204,8 +251,11 @@ public class FrmGlavna extends javax.swing.JFrame {
     private javax.swing.JMenu jMClanovi;
     private javax.swing.JMenuItem jMIPrikazClanarine;
     private javax.swing.JMenuItem jMIPrikazClanova;
+    private javax.swing.JMenuItem jMIPrikazRacuna;
     private javax.swing.JMenuItem jMIUnosClanarine;
     private javax.swing.JMenuItem jMIUnosClanova;
+    private javax.swing.JMenuItem jMIUnosRacuna;
+    private javax.swing.JMenu jMRacuni;
     private javax.swing.JMenuItem jMenuItem1;
     // End of variables declaration//GEN-END:variables
 }

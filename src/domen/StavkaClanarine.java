@@ -14,9 +14,26 @@ public class StavkaClanarine {
     private String naziv;
     private int BrTerminaNedeljno;
     private double cenaTermina;
+    private long ClanarinaID;
+
+    public long getClanarinaID() {
+        return ClanarinaID;
+    }
+
+    public void setClanarinaID(long ClanarinaID) {
+        this.ClanarinaID = ClanarinaID;
+    }
 
     public int getBrTerminaNedeljno() {
         return BrTerminaNedeljno;
+    }
+
+    public String getNaziv() {
+        return naziv;
+    }
+
+    public void setNaziv(String naziv) {
+        this.naziv = naziv;
     }
 
     public void setBrTerminaNedeljno(int BrTerminaNedeljno) {

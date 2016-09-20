@@ -13,6 +13,9 @@ public class Zaposleni extends Lice{
     
     private boolean administrator;
 
+    public Zaposleni() {
+    }
+
     
 
     public boolean isAdministrator() {
@@ -26,6 +29,11 @@ public class Zaposleni extends Lice{
     public Zaposleni(boolean administrator, long liceID, String jmbg, String ime, String prezime, String adresa, String email, String telefon) {
         //super( jmbg, ime, prezime, adresa, email, telefon);
         this.administrator = administrator;
+    }
+    
+        @Override
+    public String toString() {
+        return super.getIme() + " " + super.getPrezime(); 
     }
     
     

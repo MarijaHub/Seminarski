@@ -18,10 +18,31 @@ public class Racun {
     private double cena;
     private Zaposleni zaposleniObradio;
     private Clan clanUplatio;
+    private Clanarina clanarina;
+
+    public Racun() {
+    }
+
+    public Clanarina getClanarina() {
+        return clanarina;
+    }
+
+    public void setClanarina(Clanarina clanarina) {
+        this.clanarina = clanarina;
+    }
 
     public Clan getClanUplatio() {
         return clanUplatio;
     }
+
+    public Racun(Date datumIzdavanja, double cena, Zaposleni zaposleniObradio, Clan clanUplatio, Clanarina clanarina) {
+        this.datumIzdavanja = datumIzdavanja;
+        this.cena = cena;
+        this.zaposleniObradio = zaposleniObradio;
+        this.clanUplatio = clanUplatio;
+        this.clanarina = clanarina;
+    }
+    
 
     public void setClanUplatio(Clan clanUplatio) {
         this.clanUplatio = clanUplatio;

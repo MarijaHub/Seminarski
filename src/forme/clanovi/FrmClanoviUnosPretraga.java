@@ -36,7 +36,8 @@ public class FrmClanoviUnosPretraga extends javax.swing.JFrame {
     /**
      * Creates new form FrmClanoviUnosPretraga
      */
-    int modRadaForme = 0;  // 1 - unios, 2 - izmena, 3 - pregled
+    int modRadaForme = 0;  // 1 - unios, 2 - izmenaPregled, 3 - menjaj
+    long clanIDzaIzmenu;
 
     public FrmClanoviUnosPretraga(int modRada, Clan clan) {
         initComponents();
@@ -52,7 +53,11 @@ public class FrmClanoviUnosPretraga extends javax.swing.JFrame {
         if (modRada == 3) {
             jBtnTrazi.setEnabled(false);
             jBtnPrikaziSveClanove.setEnabled(false);
+            jTxtJmbg.setEditable(false);
+            jTxtLiceID.setEditable(false);
+            jTxtPoslednjaUplata.setEditable(false);
             popuniClana(clan);
+            clanIDzaIzmenu = clan.getLiceID();
         }
 
     }
@@ -248,25 +253,52 @@ public class FrmClanoviUnosPretraga extends javax.swing.JFrame {
 
     private void jBtnZapamtiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnZapamtiActionPerformed
 
-        try {
-            //DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-            //Long liceID = null;
-            String jmbg = jTxtJmbg.getText().trim();
-            String ime = jTxtIme.getText().trim();
-            String prezime = jTxtPrezime.getText().trim();
-            String adresa = (jTxtAdresa.getText() != null) ? jTxtAdresa.getText().trim() : null;
-            String email = (jTxtEmail.getText() != null) ? jTxtEmail.getText().trim() : null;
-            String tel = jTxtTelefon.getText().trim();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date datum1 = sdf.parse(jTxtPoslednjaUplata.getText().trim());
-            Clan clan = new Clan(datum1, jmbg, ime, prezime, adresa, email, tel);
-            Kontroler.getInstance().dodajClana(clan);
+        if (modRadaForme == 1) {
+            try {
+                //DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+                //Long liceID = null;
+                String jmbg = jTxtJmbg.getText().trim();
+                String ime = jTxtIme.getText().trim();
+                String prezime = jTxtPrezime.getText().trim();
+                String adresa = (jTxtAdresa.getText() != null) ? jTxtAdresa.getText().trim() : null;
+                String email = (jTxtEmail.getText() != null) ? jTxtEmail.getText().trim() : null;
+                String tel = jTxtTelefon.getText().trim();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date datum1 = sdf.parse(jTxtPoslednjaUplata.getText().trim());
+                Clan clan = new Clan(datum1, jmbg, ime, prezime, adresa, email, tel);
+                Kontroler.getInstance().dodajClana(clan);
 
-            JOptionPane.showMessageDialog(this, "Novi CLAN je sacuvan!");
+                JOptionPane.showMessageDialog(this, "Novi CLAN je sacuvan!");
 
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
         }
+
+        if (modRadaForme == 3) {
+            try {
+                Clan clan = new Clan();// ime, prezime, adresa, email, tel);
+                clan.setLiceID(clanIDzaIzmenu);
+                //DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+                //Long liceID = null;
+                //String jmbg = jTxtJmbg.getText().trim();
+                clan.setIme(jTxtIme.getText().trim()); 
+                clan.setPrezime(jTxtPrezime.getText().trim());
+                clan.setAdresa((jTxtAdresa.getText() != null) ? jTxtAdresa.getText().trim() : null);
+                clan.setEmail((jTxtEmail.getText() != null) ? jTxtEmail.getText().trim() : null);
+                clan.setTelefon(jTxtTelefon.getText().trim());
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//            java.util.Date datum1 = sdf.parse(jTxtPoslednjaUplata.getText().trim());
+
+                Kontroler.getInstance().izmeniClana(clan);
+
+                JOptionPane.showMessageDialog(this, "Novi CLAN je izmenjen!");
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
+        }
+
 
     }//GEN-LAST:event_jBtnZapamtiActionPerformed
 
@@ -338,12 +370,9 @@ public class FrmClanoviUnosPretraga extends javax.swing.JFrame {
 
     private void vratiClanoveBase(List<Clan> vratiClanove) {
         try {
-            FrmPrikazClanova f = new FrmPrikazClanova(vratiClanove);
-            JDialog dialog = new JDialog(this, "Prikaz clanova", true);
-            dialog.setLayout(new BorderLayout());
-            dialog.add(f, BorderLayout.CENTER);
-            dialog.pack();
+            JDPrikazClanova dialog = new JDPrikazClanova(null, false, vratiClanove);
             dialog.setVisible(true);
+            this.setVisible(false);
         } catch (Exception ex) {
             Logger.getLogger(FrmClanoviUnosPretraga.class.getName()).log(Level.SEVERE, null, ex);
         }

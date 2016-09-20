@@ -10,6 +10,7 @@ import domen.Clan;
 import domen.Clanarina;
 import domen.Lice;
 import domen.Racun;
+import domen.StavkaClanarine;
 import domen.Zaposleni;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +50,7 @@ public class Kontroler {
         } catch (Exception e) {
             db.rollbackTransakcije();
             throw e;
-        }
-        finally {
+        } finally {
             db.ZatvoriKonekciju();
         }
     }
@@ -64,21 +64,39 @@ public class Kontroler {
         return lc;
     }
 
-    public void dodajRacun(Racun racun) {
-        //kRacuna.dodajRacun(racun);
+    public void dodajRacun(Racun racun) throws Exception {
+        try {
+            db.UcitajDriver();
+            db.OtvoriKonekciju();
+            db.sacuvajRacun(racun);
+            db.commitTransakcije();
+        } catch (Exception e) {
+            db.rollbackTransakcije();
+            throw e;
+        } finally {
+            db.ZatvoriKonekciju();
+        }
     }
 
-    public List<Racun> vratiRacune() {
-        return new ArrayList<>();//return kRacuna.vratiListuRacuna();
+    public List<Racun> vratiRacune() throws Exception {
+        db.UcitajDriver();
+        db.OtvoriKonekciju();
+        List<Racun> lc = db.vratiRacune();
+        //db.commitTransakcije();
+        db.ZatvoriKonekciju();
+        return lc;
     }
 
     public void dodajZaposlenog(Zaposleni zaposleni) {
         //kZaposlenih.dodajZaposlenog(zaposleni);
     }
 
-    public List<Zaposleni> vratiZaposlene() {
-        return new ArrayList<>();
-//return kZaposlenih.vratiListuZaposlenih();
+    public List<Zaposleni> vratiZaposlene() throws Exception {
+        db.UcitajDriver();
+        db.OtvoriKonekciju();
+        List<Zaposleni> lista = db.vratiZaposlene();
+        db.ZatvoriKonekciju();
+        return lista;
     }
 
     public void dodajClanarinu(Clanarina clanarina) throws Exception {
@@ -86,12 +104,15 @@ public class Kontroler {
             db.UcitajDriver();
             db.OtvoriKonekciju();
             db.sacuvajClanarinu(clanarina);
+            for (StavkaClanarine s : clanarina.getStavke()) {
+                s.setClanarinaID(clanarina.getClanarinaID());
+                db.sacuvajStavku(s, db.getClanarinaID());
+            }
             db.commitTransakcije();
         } catch (Exception e) {
             db.rollbackTransakcije();
             throw e;
-        }
-        finally {
+        } finally {
             db.ZatvoriKonekciju();
         }
     }
@@ -115,7 +136,6 @@ public class Kontroler {
         db.UcitajDriver();
         db.OtvoriKonekciju();
         db.izmeniLice(clan);
-        db.sacuvajLice(clan);
         db.ZatvoriKonekciju();
     }
 
@@ -125,6 +145,13 @@ public class Kontroler {
         List<Clan> c = db.traziClana(whereUslov);
         db.ZatvoriKonekciju();
         return c;
+    }
+
+    public void brisiRacun(Racun selektovaniRacun) throws Exception {
+        db.UcitajDriver();
+        db.OtvoriKonekciju();
+        db.brisiRacun(selektovaniRacun);
+        db.ZatvoriKonekciju();
     }
 
 }

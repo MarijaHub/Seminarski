@@ -5,7 +5,6 @@
  */
 package forme.clanarine;
 
-import forme.clanovi.model.*;
 import domen.Clan;
 import domen.Clanarina;
 import java.text.DateFormat;

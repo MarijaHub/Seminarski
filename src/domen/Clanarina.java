@@ -72,10 +72,17 @@ public class Clanarina {
         this.Cena = Cena;
     }
 
-    public Clanarina( Date vaziOd, Date VaziDo, double Cena) {
+    public Clanarina( Date vaziOd, Date VaziDo, double Cena, Zaposleni zaposleniKreirao) {
         this.vaziOd = vaziOd;
         this.VaziDo = VaziDo;
         this.Cena = Cena;
+        this.zaposleniKreirao = zaposleniKreirao;
+    }
+    
+    
+    @Override
+    public String toString() {
+        return ""+ getClanarinaID();
     }
     
     

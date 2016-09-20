@@ -6,9 +6,9 @@
 package forme.clanovi;
 
 import domen.Clan;
-import forme.clanovi.model.ClanTableModel;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.ListSelectionEvent;
@@ -22,7 +22,7 @@ import poslovnaLogika.Kontroler;
  *
  * @author mdzeletovic
  */
-public class FrmPrikazClanova extends javax.swing.JPanel {
+public class FrmPrikazClanova extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmPrikazClanova
@@ -62,14 +62,21 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTblClanovi = new javax.swing.JTable();
 
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        add(jCmbFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(179, 52, 80, -1));
+        add(jTxtFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(277, 52, 152, -1));
+
         jBtnTrazi.setText("Trazi");
         jBtnTrazi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnTraziActionPerformed(evt);
             }
         });
+        add(jBtnTrazi, new org.netbeans.lib.awtextra.AbsoluteConstraints(447, 51, -1, -1));
 
         jLabel1.setText("Filter po:");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 55, -1, -1));
 
         jBtnIzmeni.setText("Izmeni clana");
         jBtnIzmeni.setEnabled(false);
@@ -78,6 +85,7 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
                 jBtnIzmeniActionPerformed(evt);
             }
         });
+        add(jBtnIzmeni, new org.netbeans.lib.awtextra.AbsoluteConstraints(223, 285, -1, -1));
 
         jTblClanovi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -93,46 +101,7 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
         jTblClanovi.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jTblClanovi);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jCmbFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTxtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBtnTrazi)
-                        .addGap(83, 83, 83))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(99, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(223, 223, 223)
-                .addComponent(jBtnIzmeni)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCmbFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnTrazi)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jBtnIzmeni)
-                .addContainerGap(25, Short.MAX_VALUE))
-        );
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 85, -1, 189));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnTraziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTraziActionPerformed
@@ -147,8 +116,10 @@ public class FrmPrikazClanova extends javax.swing.JPanel {
         long LiceID = (long) jTblClanovi.getModel().getValueAt(pom, 0);
         Clan selektovaniClan = ((ClanTableModel) jTblClanovi.getModel()).getClanPoId(LiceID);
         
-        FrmClanoviUnosPretraga frm = new FrmClanoviUnosPretraga(3, selektovaniClan);
+        FrmClanoviUnosPretraga frm = new FrmClanoviUnosPretraga(4, selektovaniClan);
         frm.setVisible(true);
+        
+        this.dispose();
         
     }//GEN-LAST:event_jBtnIzmeniActionPerformed
 

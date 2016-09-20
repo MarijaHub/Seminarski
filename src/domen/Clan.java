@@ -12,9 +12,8 @@ import java.util.Date;
  *
  * @author mdzeletovic
  */
-public class Clan extends Lice implements Serializable{
-    
-    
+public class Clan extends Lice implements Serializable {
+
     private Date poslednjaUplata;
 
     public Date getPoslednjaUplata() {
@@ -26,19 +25,21 @@ public class Clan extends Lice implements Serializable{
     }
 
     public Clan(Date poslednjaUplata, String jmbg, String ime, String prezime, String adresa, String email, String telefon) {
-        super( jmbg, ime, prezime, adresa, email, telefon);
+        super(jmbg, ime, prezime, adresa, email, telefon);
         this.poslednjaUplata = poslednjaUplata;
     }
-    
+
     public Clan() {
     }
-String mama = "";
-    public String getLiceIDString() {
-        return mama + (super.getLiceID());
-    }
-    
 
-    
-    
-    
+
+    public String getLiceIDString() {
+        return "" + (super.getLiceID());
+    }
+
+    @Override
+    public String toString() {
+        return super.getIme() + " " + super.getPrezime() + super.getJmbg();
+    }
+
 }

@@ -7,7 +7,7 @@ package forme.clanarine;
 
 import domen.Clan;
 import domen.Clanarina;
-import forme.clanovi.model.ClanTableModel;
+import forme.clanovi.ClanTableModel;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
