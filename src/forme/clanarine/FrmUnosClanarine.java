@@ -9,6 +9,7 @@ import domen.Clan;
 import domen.Clanarina;
 import domen.StavkaClanarine;
 import domen.Zaposleni;
+import forme.clanovi.ClanTableModel;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -25,12 +26,20 @@ import poslovnaLogika.Kontroler;
  */
 public class FrmUnosClanarine extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrmUnosClanarine
-     */
-    public FrmUnosClanarine() throws Exception {
+    int modRadaForme = 0;  // 1 - unios, 2 - izmena
+    long IDzaIzmenu;
+
+    public FrmUnosClanarine(int modRada, Clanarina clanarina) throws Exception {
         initComponents();
-        srediFormu();
+        modRadaForme = modRada;
+        srediFormu(clanarina);
+        
+        if (modRada == 2) {
+            jBtnObrisiRed.setVisible(false);
+            jBtbDodajRed.setVisible(false);
+            IDzaIzmenu = clanarina.getClanarinaID();
+            jTableStavke.setEnabled(false);
+        }
     }
 
     /**
@@ -173,20 +182,41 @@ public class FrmUnosClanarine extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnZapamtiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnZapamtiActionPerformed
-        try {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            Date vaziOd = df.parse(jTxtVaziOd.getText().trim());
-            Date vaziDo = df.parse(jTxtVaziDo.getText().trim());
-            Double cena = Double.parseDouble(jTxtCena.getText());
-            Zaposleni zaposleni = (Zaposleni) jCmbZaposleni.getSelectedItem();
-            Clanarina cl = new Clanarina(vaziOd, vaziDo, cena, zaposleni);
-            cl.setStavke(((StavkaTableModel) jTableStavke.getModel()).vratiStavke());
+        if (modRadaForme == 1) {
+            try {
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                Date vaziOd = df.parse(jTxtVaziOd.getText().trim());
+                Date vaziDo = df.parse(jTxtVaziDo.getText().trim());
+                Double cena = Double.parseDouble(jTxtCena.getText());
+                Zaposleni zaposleni = (Zaposleni) jCmbZaposleni.getSelectedItem();
+                Clanarina cl = new Clanarina(vaziOd, vaziDo, cena, zaposleni);
+                cl.setStavke(((StavkaTableModel) jTableStavke.getModel()).vratiStavke());
 
-            Kontroler.getInstance().dodajClanarinu(cl);
-            JOptionPane.showMessageDialog(this, "Nova clanarina je sacuvana!");
+                Kontroler.getInstance().dodajClanarinu(cl);
+                JOptionPane.showMessageDialog(this, "Nova clanarina je sacuvana!");
 
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
+        }
+
+        if (modRadaForme == 2) {
+            try {
+                Clanarina clanarina = new Clanarina();
+                clanarina.setClanarinaID(IDzaIzmenu);
+                clanarina.setCena(Double.parseDouble(jTxtCena.getText()));
+                clanarina.setZaposleniKreirao((Zaposleni) jCmbZaposleni.getSelectedItem());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                clanarina.setVaziOd(sdf.parse(jTxtVaziOd.getText().trim()));
+                clanarina.setVaziDo(sdf.parse(jTxtVaziDo.getText().trim()));
+
+                Kontroler.getInstance().izmeniClanarinu(clanarina);
+
+                JOptionPane.showMessageDialog(this, "Novi CLANarina je izmenjen!");
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
         }
     }//GEN-LAST:event_jBtnZapamtiActionPerformed
 
@@ -202,10 +232,6 @@ public class FrmUnosClanarine extends javax.swing.JFrame {
             ((StavkaTableModel) jTableStavke.getModel()).obrisiRed(red);
         }
     }//GEN-LAST:event_jBtnObrisiRedActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtbDodajRed;
@@ -223,19 +249,30 @@ public class FrmUnosClanarine extends javax.swing.JFrame {
     private javax.swing.JTextField jTxtVaziOd;
     // End of variables declaration//GEN-END:variables
 
-    private void srediFormu() throws Exception {
-
-        jTableStavke.setModel(new StavkaTableModel());
+    private void srediFormu(Clanarina clanarina) throws Exception {
         
+        jTableStavke.setModel(new StavkaTableModel());
         List<Zaposleni> lista = Kontroler.getInstance().vratiZaposlene();
-        if (lista.size()>0) {
-            Collections.sort(lista, new Comparator<Zaposleni>() {
-                @Override
-                public int compare(Zaposleni o1, Zaposleni o2) {
-                    return o1.toString().compareTo(o2.toString());
-                }
-            });
-        }
         jCmbZaposleni.setModel(new DefaultComboBoxModel(lista.toArray()));
+
+        if (modRadaForme == 2) {
+            popuniClanarinu(clanarina);
+        }
+    }
+
+    private void popuniClanarinu(Clanarina clanarina) {
+        jCmbZaposleni.setSelectedItem(clanarina.getZaposleniKreirao());
+        jTxtVaziOd.setText(clanarina.getVaziOd().toString());
+        jTxtVaziDo.setText(clanarina.getVaziDo().toString());
+        jTxtCena.setText("" + clanarina.getCena());
+
+        try {
+            StavkaTableModel model = new StavkaTableModel(clanarina.getStavke());
+            jTableStavke.setModel(model);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }
 }

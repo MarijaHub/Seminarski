@@ -16,7 +16,8 @@ public class Lice implements Serializable{
     private Long liceID;
     private String jmbg;
     private String ime;
-    private String prezime;private String adresa;
+    private String prezime;
+    private String adresa;
     private String email;
     private String telefon;
 

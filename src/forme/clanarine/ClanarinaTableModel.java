@@ -35,7 +35,6 @@ public class ClanarinaTableModel extends AbstractTableModel {
         }
     }
 
-
     @Override
     public int getRowCount() {
         if (lc == null) {
@@ -115,5 +114,13 @@ public class ClanarinaTableModel extends AbstractTableModel {
         return lc;
     }
 
+    public Clanarina getClanarinaPoId(long clanarinaID) {
+        for (Clanarina c : lc) {
+            if (c.getClanarinaID() == clanarinaID) {
+                return c;
+            }
 
+        }
+        return null;
+    }
 }

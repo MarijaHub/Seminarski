@@ -268,7 +268,7 @@ public class FrmClanoviUnosPretraga extends javax.swing.JFrame {
                 Clan clan = new Clan(datum1, jmbg, ime, prezime, adresa, email, tel);
                 Kontroler.getInstance().dodajClana(clan);
 
-                JOptionPane.showMessageDialog(this, "Novi CLAN je sacuvan!");
+                JOptionPane.showMessageDialog(this, "Sistem je zаpаmtio člana!");
 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage());

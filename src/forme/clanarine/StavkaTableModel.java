@@ -5,6 +5,7 @@
  */
 package forme.clanarine;
 
+import domen.Clan;
 import domen.Clanarina;
 import domen.StavkaClanarine;
 import java.util.ArrayList;
@@ -19,11 +20,15 @@ import javax.swing.table.AbstractTableModel;
  */
 public class StavkaTableModel extends AbstractTableModel {
     private List<StavkaClanarine> listaStavki;
-    private JTable tabelaStavki;
     private final String[] kolone = new String[]{"Naziv", "Broj termina nedeljno", "Cena termina"};;
 
     public StavkaTableModel() {
         listaStavki = new ArrayList<>();
+    }
+    
+    public StavkaTableModel(List<StavkaClanarine> listaStavki) {
+        this.listaStavki = listaStavki;
+        
     }
 
 

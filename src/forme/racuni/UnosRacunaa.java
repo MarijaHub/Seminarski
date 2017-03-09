@@ -142,7 +142,7 @@ public class UnosRacunaa extends javax.swing.JFrame {
             Racun r = new Racun(datumIzdavanja, cena, zaposleni, clan, clanarina);
             Kontroler.getInstance().dodajRacun(r);
 
-            JOptionPane.showMessageDialog(this, "Novi CLAN je sacuvan!");
+            JOptionPane.showMessageDialog(this, "Uspešno kreiran novi račun!");
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());

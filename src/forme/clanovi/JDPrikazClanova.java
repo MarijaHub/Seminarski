@@ -8,12 +8,15 @@ package forme.clanovi;
 import domen.Clan;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import poslovnaLogika.Kontroler;
 
 /**
  *
@@ -21,7 +24,6 @@ import javax.swing.table.TableRowSorter;
  */
 public class JDPrikazClanova extends javax.swing.JDialog {
 
-    
     List<Clan> listaZaPrikaz;
     Clan clanSel;
 
@@ -38,11 +40,11 @@ public class JDPrikazClanova extends javax.swing.JDialog {
             public void valueChanged(ListSelectionEvent event) {
                 if (jTblClanovi.getSelectedRowCount() == 1) {
                     jBtnIzmeni.setEnabled(true);
-                    event.getSource();
+                    jBtnObrisiClana.setEnabled(true);
                 }
             }
         });
- 
+
     }
 
     /**
@@ -61,6 +63,7 @@ public class JDPrikazClanova extends javax.swing.JDialog {
         jBtnIzmeni = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTblClanovi = new javax.swing.JTable();
+        jBtnObrisiClana = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -95,11 +98,24 @@ public class JDPrikazClanova extends javax.swing.JDialog {
         jTblClanovi.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jTblClanovi);
 
+        jBtnObrisiClana.setText("Obrisi clana");
+        jBtnObrisiClana.setEnabled(false);
+        jBtnObrisiClana.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnObrisiClanaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 602, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(174, Short.MAX_VALUE)
+                .addComponent(jBtnIzmeni)
+                .addGap(104, 104, 104)
+                .addComponent(jBtnObrisiClana)
+                .addGap(146, 146, 146))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 63, Short.MAX_VALUE)
@@ -114,15 +130,17 @@ public class JDPrikazClanova extends javax.swing.JDialog {
                             .addComponent(jBtnTrazi))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(8, 8, 8)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(197, 197, 197)
-                            .addComponent(jBtnIzmeni)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGap(0, 63, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 363, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(293, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBtnObrisiClana)
+                    .addComponent(jBtnIzmeni))
+                .addGap(47, 47, 47))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 53, Short.MAX_VALUE)
@@ -139,9 +157,7 @@ public class JDPrikazClanova extends javax.swing.JDialog {
                         .addComponent(jBtnTrazi))
                     .addGap(11, 11, 11)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(11, 11, 11)
-                    .addComponent(jBtnIzmeni)
-                    .addGap(0, 53, Short.MAX_VALUE)))
+                    .addGap(0, 87, Short.MAX_VALUE)))
         );
 
         pack();
@@ -161,14 +177,28 @@ public class JDPrikazClanova extends javax.swing.JDialog {
 
         FrmClanoviUnosPretraga frm = new FrmClanoviUnosPretraga(3, selektovaniClan);
         frm.setVisible(true);
+        JOptionPane.showMessageDialog(this, "Sistem je pronašao podatke o izabranom članu");
 
         this.dispose();
 
     }//GEN-LAST:event_jBtnIzmeniActionPerformed
 
+    private void jBtnObrisiClanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnObrisiClanaActionPerformed
+        try {
+            int pom = jTblClanovi.getSelectedRow();
+            long LiceID = (long) jTblClanovi.getModel().getValueAt(pom, 0);
+            //Clan selektovaniClan = ((ClanTableModel) jTblClanovi.getModel()).getClanPoId(LiceID);
 
+            Kontroler.getInstance().brisiClana(LiceID);
 
-    
+            JOptionPane.showMessageDialog(this, "obrisan clan");
+
+            this.dispose();
+        } catch (Exception ex) {
+            Logger.getLogger(JDPrikazClanova.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jBtnObrisiClanaActionPerformed
+
     private void srediFormu() {
 
         try {
@@ -188,6 +218,7 @@ public class JDPrikazClanova extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnIzmeni;
+    private javax.swing.JButton jBtnObrisiClana;
     private javax.swing.JButton jBtnTrazi;
     private javax.swing.JComboBox<String> jCmbFilter;
     private javax.swing.JLabel jLabel1;

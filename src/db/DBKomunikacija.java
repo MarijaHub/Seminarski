@@ -29,6 +29,7 @@ import java.util.List;
 public class DBKomunikacija {
 
     private Connection connection;
+    
     private long clanarinaID;
 
     public long getClanarinaID() {
@@ -104,6 +105,7 @@ public class DBKomunikacija {
         String query = "UPDATE  Lice SET Ime = ?,Prezime=?,Adresa=?,Email=?,Telefon=?,ModifyTime=? where LiceID =" + lice.getLiceID();
 
         PreparedStatement naredba = connection.prepareStatement(query);
+        connection.setAutoCommit(true);
 
         naredba.setString(1, lice.getIme());
         naredba.setString(2, lice.getPrezime());
@@ -273,7 +275,6 @@ public class DBKomunikacija {
         naredba.setInt(2, s.getBrTerminaNedeljno());
         naredba.setDouble(3, s.getCenaTermina());
         naredba.setLong(4, s.getClanarinaID());
-        //naredba.setLong(4, clanarinaID);
 
         naredba.executeUpdate();
     }
@@ -281,7 +282,7 @@ public class DBKomunikacija {
     public List<Zaposleni> vratiZaposlene() throws Exception {
         try {
             List<Zaposleni> lista = new ArrayList<>();
-            String sql = "SELECT Lice.LiceID, jmbg, ime, prezime, adresa, email, telefon, Administrator FROM Lice inner join Zaposleni on ZaposleniID = Lice.LiceID";
+            String sql = "SELECT Lice.LiceID, jmbg, ime, prezime, adresa, email, telefon, Administrator FROM Lice inner join Zaposleni on Zaposleni.ZaposleniID = Lice.LiceID";
             Statement sqlStatement = connection.createStatement();
             ResultSet rs = sqlStatement.executeQuery(sql);
             while (rs.next()) {
@@ -406,10 +407,68 @@ public class DBKomunikacija {
         String query = "Delete from  Racun where RacunID = " + selektovaniRacun.getRacunID();
 
         PreparedStatement naredba = connection.prepareStatement(query);
+        connection.setAutoCommit(true);
 
         naredba.executeUpdate();
 
 //        Statement naredba = connection.createStatement();
 //        naredba.executeUpdate(query);
+    }
+
+    public void brisiClana(long LiceID) throws SQLException {
+        String query = "Delete   Clan, Lice From Clan inner join Lice where Clan.ClanID = ? and Lice.LiceID = ?";
+
+        PreparedStatement naredba = connection.prepareStatement(query);
+        connection.setAutoCommit(true);
+        naredba.setLong(1, LiceID);
+        naredba.setLong(2, LiceID);
+
+        naredba.executeUpdate();
+    }
+
+    public void izmeniClanarinu(Clanarina clanarina) throws SQLException, Exception {
+        try {
+            String query = "UPDATE  Clanarina SET VaziOd = ?,VaziDo=?,Cena=?,ZaposleniKreirao=? where ClanarinaID = " + clanarina.getClanarinaID();
+
+            PreparedStatement naredba = connection.prepareStatement(query);
+
+            naredba.setDate(1, new java.sql.Date(clanarina.getVaziOd().getTime()));
+            naredba.setDate(2, new java.sql.Date(clanarina.getVaziDo().getTime()));
+            naredba.setDouble(3, clanarina.getCena());
+            naredba.setLong(4, clanarina.getZaposleniKreirao().getLiceID());
+            connection.setAutoCommit(true);
+            naredba.executeUpdate();
+            System.out.println("db.grr.izmeniClanarinu()");
+            //naredba.close();
+        } catch (Exception e) {
+            System.out.println("db.DBKomunikacija.izmeniClanarinu()");
+            throw new Exception("Neuspesna izmena clanarine!", e);
+        }
+    }
+
+    public List<StavkaClanarine> vratiStavkeZaClanarinu(long clanarinaID) throws Exception {
+        try {
+            List<StavkaClanarine> listaStavki = new ArrayList<>();
+
+            String sql = "Select * from StavkaClanarine  where Clanarinaid = " + clanarinaID;
+
+            Statement sqlStatement = connection.createStatement();
+            ResultSet rs = sqlStatement.executeQuery(sql);
+            while (rs.next()) {
+                StavkaClanarine stavka = new StavkaClanarine();
+                stavka.setClanarinaID(clanarinaID);
+                stavka.setNaziv(rs.getString("Naziv"));
+                stavka.setBrTerminaNedeljno(rs.getInt("BrojTerminaNedeljno"));
+                stavka.setCenaTermina(rs.getDouble("CenaTermina"));
+
+                listaStavki.add(stavka);
+            }
+
+            rs.close();
+            sqlStatement.close();
+            return listaStavki;
+        } catch (SQLException ex) {
+            throw new Exception("Neuspesno ucitavanje clanova!", ex);
+        }
     }
 }

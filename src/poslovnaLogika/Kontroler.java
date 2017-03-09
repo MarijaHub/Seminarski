@@ -121,6 +121,9 @@ public class Kontroler {
         db.UcitajDriver();
         db.OtvoriKonekciju();
         List<Clanarina> lc = db.traziSveClanarine();
+        for (Clanarina c : lc) {
+            c.setStavke(db.vratiStavkeZaClanarinu(c.getClanarinaID()));
+        }
         db.ZatvoriKonekciju();
         return lc;
     }
@@ -151,6 +154,20 @@ public class Kontroler {
         db.UcitajDriver();
         db.OtvoriKonekciju();
         db.brisiRacun(selektovaniRacun);
+        db.ZatvoriKonekciju();
+    }
+
+    public void brisiClana(long LiceID) throws Exception {
+        db.UcitajDriver();
+        db.OtvoriKonekciju();
+        db.brisiClana(LiceID);
+        db.ZatvoriKonekciju();
+    }
+
+    public void izmeniClanarinu(Clanarina clanarina) throws Exception {
+        db.UcitajDriver();
+        db.OtvoriKonekciju();
+        db.izmeniClanarinu(clanarina);
         db.ZatvoriKonekciju();
     }
 

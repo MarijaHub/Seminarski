@@ -8,6 +8,7 @@ package forme.racuni;
 import domen.Clan;
 import domen.Racun;
 import forme.clanovi.ClanTableModel;
+import forme.clanovi.FrmClanoviUnosPretraga;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import poslovnaLogika.Kontroler;
@@ -42,7 +44,6 @@ public class PrikazRacuna extends javax.swing.JDialog {
             public void valueChanged(ListSelectionEvent event) {
                 if (jTblRacuni.getSelectedRowCount() == 1) {
                     jBtnStorniraj.setEnabled(true);
-                    event.getSource();
                 }
             }
         });
@@ -59,6 +60,7 @@ public class PrikazRacuna extends javax.swing.JDialog {
         jBtnStorniraj = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTblRacuni = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -100,16 +102,25 @@ public class PrikazRacuna extends javax.swing.JDialog {
         });
         jScrollPane2.setViewportView(jTblRacuni);
 
+        jButton1.setText("Detalji");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(jLabel1)
-                .addGap(62, 62, 62)
-                .addComponent(jCmbFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(269, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(jLabel1)
+                        .addGap(62, 62, 62)
+                        .addComponent(jCmbFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(114, 114, 114)
+                        .addComponent(jBtnStorniraj)
+                        .addGap(114, 114, 114)
+                        .addComponent(jButton1)))
+                .addContainerGap(132, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,10 +131,7 @@ public class PrikazRacuna extends javax.swing.JDialog {
                             .addComponent(jBtnTrazi))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(18, 18, 18)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(207, 207, 207)
-                            .addComponent(jBtnStorniraj)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -133,7 +141,11 @@ public class PrikazRacuna extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jCmbFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(258, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBtnStorniraj)
+                    .addComponent(jButton1))
+                .addGap(23, 23, 23))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(21, 21, 21)
@@ -144,9 +156,7 @@ public class PrikazRacuna extends javax.swing.JDialog {
                         .addComponent(jBtnTrazi))
                     .addGap(11, 11, 11)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(11, 11, 11)
-                    .addComponent(jBtnStorniraj)
-                    .addContainerGap(22, Short.MAX_VALUE)))
+                    .addContainerGap(56, Short.MAX_VALUE)))
         );
 
         pack();
@@ -166,6 +176,8 @@ public class PrikazRacuna extends javax.swing.JDialog {
             Racun selektovaniRacun = ((RacunTableModel) jTblRacuni.getModel()).getRacunPoId(RacunID);
             
             Kontroler.getInstance().brisiRacun(selektovaniRacun);
+           ((RacunTableModel) jTblRacuni.getModel()).fireTableDataChanged();
+            
         } catch (Exception ex) {
             Logger.getLogger(PrikazRacuna.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -191,6 +203,7 @@ public class PrikazRacuna extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnStorniraj;
     private javax.swing.JButton jBtnTrazi;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jCmbFilter;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
